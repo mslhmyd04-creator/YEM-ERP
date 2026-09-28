@@ -6,12 +6,14 @@
 - [x] Establish Flutter source layout and Arabic RTL app entry point.
 - [x] Generate Android/Windows platform runners using Flutter SDK and retain source files.
 - [x] Run `flutter analyze`, `flutter test`, and debug Android scaffold build in GitHub Actions.
-- [ ] Verify SQLCipher binding, secure key storage and encrypted migration integration in CI and on devices (implementation added).
+- [x] Verify SQLCipher binding, secure key storage and first-open migration in CI.
+- [ ] Verify encrypted database/key behavior on Android and Windows devices.
 - [x] Draft migration 001 for tenant, roles, catalog, and counterparties; validate SQLite constraints in memory.
 - [x] Add GitHub checks for migration, Flutter analysis, unit tests and debug Android build.
-- [ ] Verify migration 001 under encrypted Flutter storage, upgrades and rollback on devices (first-open integration added).
+- [ ] Verify migration upgrades and rollback on devices (first-open integration passed CI).
 - [ ] Add local authentication, company, branch, users, roles, permissions.
-- [ ] Add products, categories, units, customers, suppliers, warehouses.
+- [ ] Verify company-scoped product repository create/list/archive tests in CI (implementation added).
+- [ ] Add categories, units, customers, suppliers, warehouses and authorized UI workflows.
 - [ ] Add expenses, basic custody, sales invoice, and PDF printing.
 - [ ] Pass phase 0 build, unit, and migration gates.
 
