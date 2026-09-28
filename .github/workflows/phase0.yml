@@ -45,3 +45,20 @@ jobs:
         run: flutter test
       - name: Build Android debug app
         run: flutter build apk --debug
+
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - name: Enable desktop target
+        run: flutter config --enable-windows-desktop
+      - name: Resolve dependencies
+        run: flutter pub get
+      - name: Test encrypted storage on Windows runner
+        run: flutter test
+      - name: Build Windows debug app
+        run: flutter build windows --debug

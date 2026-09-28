@@ -12,7 +12,8 @@
 - [x] Add GitHub checks for migration, Flutter analysis, unit tests and debug Android build.
 - [ ] Verify migration upgrades and rollback on devices (first-open integration passed CI).
 - [ ] Add local authentication, company, branch, users, roles, permissions.
-- [ ] Verify company-scoped product repository create/list/archive tests in CI (implementation added).
+- [x] Verify company-scoped product repository create/list/archive tests in CI.
+- [ ] Verify Windows SQLCipher tests and debug build in GitHub CI.
 - [ ] Add categories, units, customers, suppliers, warehouses and authorized UI workflows.
 - [ ] Add expenses, basic custody, sales invoice, and PDF printing.
 - [ ] Pass phase 0 build, unit, and migration gates.
