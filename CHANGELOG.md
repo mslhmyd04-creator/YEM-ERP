@@ -9,3 +9,4 @@
 - Added GitHub Actions checks for migration, Flutter analysis, unit tests and Android debug build; CI results pending.
 - Replaced the generated sample widget test with an Arabic RTL app-shell test after the first CI analysis failure.
 - Confirmed migration, Flutter analysis/tests and Android debug scaffold build in GitHub Actions run 36461872576.
+- Retained generated Android/Windows platform source and added SQLCipher local database opening, protected keys, migration and encrypted-file tests (CI verification pending).

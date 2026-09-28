@@ -4,17 +4,18 @@ Phase 0 foundation for the Arabic Android/Windows client. The complete specifica
 
 ## Local setup
 
-Install a compatible Flutter SDK with Android and Windows desktop tooling. From this directory run:
+Install a compatible Flutter SDK with Android and Windows desktop tooling. Platform runner files are included. From this directory run:
 
 ```bash
-flutter create --platforms=android,windows --project-name yem_erp .
 flutter pub get
 flutter analyze
 flutter test
 flutter build apk --debug
 ```
 
-Review the generated Android manifest before distributing any strict offline build. The offline variant and encrypted persistent database have **not** been implemented. Do not store business data in this foundation build. Windows builds require Flutter's Windows toolchain on Windows.
+Review the merged Android manifest before distributing any strict offline build. The offline variant and production data workflows have **not** been implemented. Do not store business data in this foundation build. Windows builds require Flutter's Windows toolchain on Windows.
+
+The SQLCipher-backed local database is isolated in `lib/src/infrastructure/local_database.dart`. Its key is generated per installation and stored through platform secure storage. The integration tests require the SQLCipher native build and will fail rather than fall back to plaintext SQLite. The app shell does not open this database until the first business workflow is implemented.
 
 ## Migration SQL check
 
