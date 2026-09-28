@@ -5,7 +5,7 @@
 - [x] Preserve supplied specifications and initialize versioned source tree.
 - [x] Establish Flutter source layout and Arabic RTL app entry point.
 - [ ] Generate Android/Windows platform runners using Flutter SDK.
-- [ ] Run `flutter analyze`, `flutter test`, and debug Android build.
+- [x] Run `flutter analyze`, `flutter test`, and debug Android scaffold build in GitHub Actions.
 - [ ] Select and integrate maintained SQLCipher binding and platform key management.
 - [x] Draft migration 001 for tenant, roles, catalog, and counterparties; validate SQLite constraints in memory.
 - [x] Add GitHub checks for migration, Flutter analysis, unit tests and debug Android build.

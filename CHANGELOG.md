@@ -8,3 +8,4 @@
 - Added migration 001 for tenant, access-control, product, party and warehouse tables; four transient SQLite constraint tests pass.
 - Added GitHub Actions checks for migration, Flutter analysis, unit tests and Android debug build; CI results pending.
 - Replaced the generated sample widget test with an Arabic RTL app-shell test after the first CI analysis failure.
+- Confirmed migration, Flutter analysis/tests and Android debug scaffold build in GitHub Actions run 36461872576.
