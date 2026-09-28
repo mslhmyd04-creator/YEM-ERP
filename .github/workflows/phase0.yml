@@ -30,6 +30,13 @@ jobs:
           cache: true
       - name: Generate missing Android and Windows runners
         run: flutter create --platforms=android,windows --project-name yem_erp .
+      - name: Package platform runners
+        run: zip -qr platform-runners.zip android windows -x '*/.gradle/*' '*/flutter/ephemeral/*'
+      - uses: actions/upload-artifact@v4
+        with:
+          name: platform-runners
+          path: platform-runners.zip
+          retention-days: 7
       - name: Resolve dependencies
         run: flutter pub get
       - name: Analyze sources
