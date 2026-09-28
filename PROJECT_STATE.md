@@ -10,7 +10,7 @@
 - Build Status: NOT VERIFIED — Flutter SDK unavailable
 - Test Status: SQLite migration checks 4/4 PASS; Flutter tests NOT VERIFIED — Flutter SDK unavailable
 - Database Migration Status: SQL migration 001 validated in transient SQLite; SQLCipher integration/upgrade NOT VERIFIED
-- Known Errors: Flutter and Dart executables absent
+- Known Errors: Local Flutter/Dart executables absent; first GitHub analysis failed on generated sample test, fix awaiting CI
 - Important Decisions: see DECISIONS.md
 - Files Modified: see latest git commit
 - Next Task: review GitHub CI and fix any failing analyze, tests, or build checks; then integrate secure storage
