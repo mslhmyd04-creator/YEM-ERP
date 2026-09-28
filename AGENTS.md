@@ -1,0 +1,3 @@
+# YEM ERP working instructions
+
+Read `PROJECT_STATE.md`, `NEXT_TASK.md`, and the relevant part of `docs/YEM_ERP_Master_Plan_2026.md` before editing. `docs/DEVELOPMENT_INSTRUCTIONS.txt` defines the phased workflow. Work only within the current phase. Keep the Flutter layers separate: presentation, application, domain, data, infrastructure. Never place secrets in source or let a client access the server database directly. Financial and inventory documents need service layers and ledgers. After a verified subtask update state, tasks, next task, decisions, errors, and changelog; commit the result. Record unavailable build or tests as NOT VERIFIED.
