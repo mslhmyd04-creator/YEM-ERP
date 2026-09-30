@@ -22,3 +22,5 @@
 - Added migration 002, Argon2id hashing, local setup/login/lockout/session, permissions and atomic product audit.
 - Added authentication, upgrade/rollback and password hashing tests; Flutter verification PENDING GitHub CI.
 - Phase 0 remains in progress; authenticated UI and device checks remain required.
+
+- UI increment: startup/setup/login/catalog implemented; end-to-end widget and startup-failure tests added. Verification PENDING CI. Previous authentication tests PASS on Windows run 36750927546; analyzer diagnostics corrected.

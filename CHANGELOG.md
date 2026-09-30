@@ -14,3 +14,5 @@
 - Verified product repository tests and Android debug build in run 36464645152; added a Windows CI job (verification pending).
 
 - 2026-09-30: Added migration 002 and local authentication/RBAC with password hashing, lockout, expiring sessions and atomic product audit; verification pending.
+
+- 2026-09-30: Connect startup to encrypted storage; add Arabic setup/login/product UI and an end-to-end widget workflow.

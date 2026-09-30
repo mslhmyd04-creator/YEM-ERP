@@ -30,7 +30,9 @@ class Argon2PasswordHasher implements PasswordHasher {
         try {
           final record = jsonDecode(encoded) as Map<String, dynamic>;
           if (record['version'] != 1 || record['algorithm'] != 'argon2id' ||
-              record['memory'] != memory || record['iterations'] != iterations) return false;
+              record['memory'] != memory || record['iterations'] != iterations) {
+            return false;
+          }
           final salt = base64Decode(record['salt'] as String);
           final expected = base64Decode(record['hash'] as String);
           if (salt.length != 16 || expected.length != 32) return false;

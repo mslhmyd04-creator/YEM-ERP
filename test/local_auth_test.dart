@@ -30,7 +30,7 @@ void main() {
     await auth.bootstrap(companyName: 'شركة', branchName: 'الرئيسي', username: 'Admin', password: password);
     company = db.select('SELECT id FROM companies').single['id'] as String;
   });
-  tearDown(() => db.dispose());
+  tearDown(() => db.close());
   Future<void> login() => auth.login(companyId: company, username: 'ADMIN', password: password);
 
   test('bootstrap is atomic and cannot replace the first administrator', () async {

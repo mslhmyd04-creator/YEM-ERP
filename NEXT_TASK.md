@@ -14,3 +14,5 @@
 ## Updated resume point
 
 Inspect CI for authentication increment; resolve analyzer/test errors, then implement setup/login and authorized product UI. Do not advance beyond Phase 0.
+
+- Next: verify UI increment CI, then continue categories/units/counterparties/warehouse Phase 0 workflows. Device secure-storage behavior remains NOT VERIFIED.

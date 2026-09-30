@@ -131,8 +131,10 @@ class LocalAuthService {
   void logout() {
     final current = _session;
     _session = null;
-    if (current != null) audit(companyId: current.companyId, userId: current.userId,
-      action: 'auth.logout', entity: 'users', recordId: current.userId);
+    if (current != null) {
+      audit(companyId: current.companyId, userId: current.userId,
+        action: 'auth.logout', entity: 'users', recordId: current.userId);
+    }
   }
 
   void audit({required String companyId, required String userId, required String action,

@@ -7,7 +7,7 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   late Database db;
   setUp(() => db = sqlite3.openInMemory());
-  tearDown(() => db.dispose());
+  tearDown(() => db.close());
   Future<void> versionOne() async {
     db.execute(await rootBundle.loadString(LocalMigrations.assets.first));
     db.execute('PRAGMA user_version=1');

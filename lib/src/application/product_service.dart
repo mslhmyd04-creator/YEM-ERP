@@ -31,8 +31,10 @@ class ProductService {
     auth.db.execute('BEGIN IMMEDIATE');
     try {
       final changed = repository.archive(companyId: session.companyId, id: id);
-      if (changed) auth.audit(companyId: session.companyId, userId: session.userId,
-        action: 'products.archive', entity: 'products', recordId: id);
+      if (changed) {
+        auth.audit(companyId: session.companyId, userId: session.userId,
+          action: 'products.archive', entity: 'products', recordId: id);
+      }
       auth.db.execute('COMMIT');
       return changed;
     } catch (_) {
