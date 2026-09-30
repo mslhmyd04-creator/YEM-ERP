@@ -16,3 +16,5 @@
 - 2026-09-30: Added migration 002 and local authentication/RBAC with password hashing, lockout, expiring sessions and atomic product audit; verification pending.
 
 - 2026-09-30: Connect startup to encrypted storage; add Arabic setup/login/product UI and an end-to-end widget workflow.
+
+- CI now retains Android APK and complete Windows debug output for device testing; documentation-only changes skip builds.

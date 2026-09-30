@@ -3,7 +3,9 @@ name: Phase 0 checks
 on:
   push:
     branches: [feat/phase-0-foundation]
+    paths-ignore: ['**/*.md', 'docs/**']
   pull_request:
+    paths-ignore: ['**/*.md', 'docs/**']
 
 jobs:
   migration:
@@ -45,6 +47,13 @@ jobs:
         run: flutter test
       - name: Build Android debug app
         run: flutter build apk --debug
+      - name: Upload Android development package
+        uses: actions/upload-artifact@v4
+        with:
+          name: yem-erp-android-debug
+          path: build/app/outputs/flutter-apk/app-debug.apk
+          if-no-files-found: error
+          retention-days: 14
 
   windows:
     runs-on: windows-latest
@@ -62,3 +71,10 @@ jobs:
         run: flutter test
       - name: Build Windows debug app
         run: flutter build windows --debug
+      - name: Upload Windows development package
+        uses: actions/upload-artifact@v4
+        with:
+          name: yem-erp-windows-debug
+          path: build/windows/x64/runner/Debug/
+          if-no-files-found: error
+          retention-days: 14

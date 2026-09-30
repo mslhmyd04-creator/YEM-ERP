@@ -18,3 +18,5 @@ Inspect CI for authentication increment; resolve analyzer/test errors, then impl
 - Next: verify UI increment CI, then continue categories/units/counterparties/warehouse Phase 0 workflows. Device secure-storage behavior remains NOT VERIFIED.
 
 - Recheck CI after correcting UI parenthesis (36751478835).
+
+- Verify debug-package upload workflow and artifacts; run 36751673652 analysis and Flutter workflow tests PASS, builds pending at checkpoint.
