@@ -12,6 +12,7 @@ dependencies:
   sqlite3: ^3.6.0
   flutter_secure_storage: ^11.2.0
   path_provider: ^2.1.5
+  cryptography: ^2.9.0
 
 dev_dependencies:
   flutter_test:
@@ -22,6 +23,7 @@ flutter:
   uses-material-design: true
   assets:
     - lib/src/data/migrations/001_core.sql
+    - lib/src/data/migrations/002_local_auth.sql
 
 hooks:
   user_defines:

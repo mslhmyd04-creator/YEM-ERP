@@ -12,3 +12,5 @@
 - Retained generated Android/Windows platform source and added SQLCipher local database opening, protected keys, migration and encrypted-file tests (CI verification pending).
 - Verified SQLCipher tests, Flutter analysis and Android debug build in GitHub Actions run 36464020834; added company-scoped product repository and tests (verification pending).
 - Verified product repository tests and Android debug build in run 36464645152; added a Windows CI job (verification pending).
+
+- 2026-09-30: Added migration 002 and local authentication/RBAC with password hashing, lockout, expiring sessions and atomic product audit; verification pending.

@@ -86,5 +86,29 @@ class CoreMigrationTest(unittest.TestCase):
             )
 
 
+class AuthMigrationTest(CoreMigrationTest):
+    def setUp(self):
+        super().setUp()
+        self.db.execute(
+            "INSERT INTO users(id,company_id,branch_id,username,password_hash,created_at) VALUES(?,?,?,?,?,?)",
+            ("u1", "a", "branch-a", "admin", "existing-hash", NOW),
+        )
+        self.db.commit()
+        sql = (Path(__file__).resolve().parents[1] / "lib/src/data/migrations/002_local_auth.sql").read_text()
+        self.db.executescript("BEGIN IMMEDIATE;\n" + sql + "\nCOMMIT;")
+
+    def test_migration_and_integrity(self):
+        self.assertEqual(self.db.execute("SELECT version FROM schema_migrations ORDER BY version").fetchall(), [(1,), (2,)])
+        self.assertEqual(self.db.execute("SELECT password_hash,failed_login_count,locked_until_ms FROM users WHERE id='u1'").fetchone(), ("existing-hash", 0, 0))
+        self.assertEqual(self.db.execute("PRAGMA integrity_check").fetchone(), ("ok",))
+        self.assertEqual(self.db.execute("PRAGMA foreign_key_check").fetchall(), [])
+
+    def test_audit_and_lockout_constraints(self):
+        with self.assertRaises(sqlite3.IntegrityError):
+            self.db.execute("UPDATE users SET failed_login_count=-1 WHERE id='u1'")
+        with self.assertRaises(sqlite3.IntegrityError):
+            self.db.execute("INSERT INTO audit_logs(id,company_id,user_id,action,entity_type,created_at) VALUES('log','b','u1','login','users',?)", (NOW,))
+
+
 if __name__ == "__main__":
     unittest.main()

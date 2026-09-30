@@ -1,10 +1,11 @@
 import 'dart:io';
 import 'dart:math';
 
-import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqlite3/sqlite3.dart';
+
+import '../data/local_migrations.dart';
 
 /// Kept out of the database file and source code. On Android this delegates to
 /// platform key storage; the Windows implementation uses its platform backend.
@@ -73,38 +74,10 @@ class EncryptedLocalDatabase {
       if (db.select('PRAGMA foreign_keys').first.values.first != 1) {
         throw StateError('Foreign key enforcement is unavailable.');
       }
-      await _migrate(db);
+      await LocalMigrations.apply(db);
       return EncryptedLocalDatabase._(db);
     } catch (_) {
       db.close();
-      rethrow;
-    }
-  }
-
-  static Future<void> _migrate(Database db) async {
-    final version = db.select('PRAGMA user_version').first.values.first as int;
-    if (version == 1) {
-      final applied = db.select('SELECT version FROM schema_migrations');
-      if (applied.length != 1 || applied.first['version'] != 1) {
-        throw StateError('Database migration history mismatch.');
-      }
-      return;
-    }
-    if (version != 0) {
-      throw StateError('Unsupported database schema version: $version');
-    }
-    // Never apply the initial migration over a partially initialized database.
-    if (db.select("SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'").isNotEmpty) {
-      throw StateError('Unversioned database contains tables.');
-    }
-    final sql = await rootBundle.loadString('lib/src/data/migrations/001_core.sql');
-    db.execute('BEGIN IMMEDIATE');
-    try {
-      db.execute(sql);
-      db.execute('PRAGMA user_version = 1');
-      db.execute('COMMIT');
-    } catch (_) {
-      db.execute('ROLLBACK');
       rethrow;
     }
   }
