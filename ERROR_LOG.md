@@ -8,3 +8,5 @@
 - 2026-09-30 / run 36750927546: analysis reported five style/deprecation diagnostics; added braces and replaced sqlite3 dispose with close. Verification pending next CI run. Windows authentication/migration tests passed.
 
 - 2026-09-30 / run 36751478835: UI Scaffold missed closing Align parenthesis; corrected before rerun.
+
+- 2026-09-30: Both authentication diagnostics and UI parenthesis errors RESOLVED; run 36752011534 analysis, tests, Android/Windows debug builds and uploads PASS.

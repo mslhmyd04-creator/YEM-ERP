@@ -11,7 +11,10 @@
 - [x] Draft migration 001 for tenant, roles, catalog, and counterparties; validate SQLite constraints in memory.
 - [x] Add GitHub checks for migration, Flutter analysis, unit tests and debug Android build.
 - [ ] Verify migration upgrades and rollback on devices (first-open integration passed CI).
-- [ ] Add local authentication, company, branch, users, roles, permissions.
+- [x] Add first-company/branch/admin setup, local authentication, stored role permissions and permission checks.
+- [x] Test local lockout, session expiry, revoked permissions and audited product rollback in CI.
+- [ ] Add user/role/branch administration UI.
+- [x] Add authorized Arabic setup/login/product UI and widget workflow tests.
 - [x] Verify company-scoped product repository create/list/archive tests in CI.
 - [x] Verify Windows SQLCipher tests and debug build in GitHub CI (36465256956).
 - [ ] Add categories, units, customers, suppliers, warehouses and authorized UI workflows.

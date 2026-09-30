@@ -18,3 +18,5 @@
 - 2026-09-30: Connect startup to encrypted storage; add Arabic setup/login/product UI and an end-to-end widget workflow.
 
 - CI now retains Android APK and complete Windows debug output for device testing; documentation-only changes skip builds.
+
+- Verified 2026-09-30: run 36752011534 passed 9 SQL checks, static analysis, 18 Flutter tests on both runners, Android/Windows builds and debug artifact uploads. Device verification remains pending.

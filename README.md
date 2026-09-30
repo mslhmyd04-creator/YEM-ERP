@@ -20,3 +20,7 @@ The SQLCipher-backed local database is isolated in `lib/src/infrastructure/local
 ## Migration SQL check
 
 `python3 -m unittest discover -s tools -p 'check_*.py' -v` runs migrations 001 and 002 in a fresh in-memory SQLite database and checks tenant isolation and constraints. It does not run a Flutter build or certify encrypted storage.
+
+## Development test packages
+
+Verified increment: [GitHub Actions run 36752011534](https://github.com/mslhmyd04-creator/YEM-ERP/actions/runs/36752011534), code commit `337817009d57dc2046a3c9746cd61dd8f0e5172f`. Artifacts `yem-erp-android-debug` and `yem-erp-windows-debug` are retained for 14 days. Follow [device acceptance](docs/PHASE0_DEVICE_TESTS.md); physical-device results are not verified.

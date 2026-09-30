@@ -1,22 +1,13 @@
 # Resume here
 
-- CURRENT PHASE: 0
-- WHAT WAS COMPLETED: platform runners, SQLCipher key storage/migration, product repository tests and Android build verified in run 36464645152
-- WHAT IS WORKING: encrypted migration, wrong-key rejection and company-scoped product CRUD pass in GitHub CI
-- WHAT IS NOT WORKING: no authenticated business UI; Android/Windows device tests and Windows build PASS in run 36465256956
-- EXACT ERROR IF ANY: local Flutter/Dart absent. Generated sample `MyApp` test error RESOLVED.
-- FILES MODIFIED: see latest commit
-- NEXT TASK: inspect Windows CI for SQLCipher tests and desktop build; fix errors before local authentication/RBAC
-- NEXT COMMAND: `flutter pub get && flutter analyze && flutter test && flutter build apk --debug`
-- EXPECTED RESULT: encrypted storage tests and Windows debug build pass in addition to Android CI
-- DO NOT REDO: copied specifications and scaffold; preserve the architecture and state files
-
-## Updated resume point
-
-Inspect CI for authentication increment; resolve analyzer/test errors, then implement setup/login and authorized product UI. Do not advance beyond Phase 0.
-
-- Next: verify UI increment CI, then continue categories/units/counterparties/warehouse Phase 0 workflows. Device secure-storage behavior remains NOT VERIFIED.
-
-- Recheck CI after correcting UI parenthesis (36751478835).
-
-- Verify debug-package upload workflow and artifacts; run 36751673652 analysis and Flutter workflow tests PASS, builds pending at checkpoint.
+- CURRENT PHASE: 0 — incomplete
+- COMPLETED: encrypted local storage, migrations 001/002, local auth/RBAC, setup/login and authorized product create/list/archive UI with atomic audit.
+- VERIFIED: run 36465256956 baseline Android/Windows builds. Run 36752011534: 9 SQL checks, analysis, 18 Flutter tests on Ubuntu/Windows, debug builds and package uploads PASS. Tested code commit: 337817009d57dc2046a3c9746cd61dd8f0e5172f.
+- CURRENT CI: https://github.com/mslhmyd04-creator/YEM-ERP/actions/runs/36752011534
+- NOT VERIFIED: device secure storage, installation, device migration and keyboard/window layout acceptance.
+- EXACT ERROR: none in current analysis/tests. Local Flutter/Dart absent. Prior CI diagnostics corrected.
+- NEXT ACTION: continue customer/warehouse/categories/units/supplier application services and authorized UI with company-scoped tests.
+- LOCAL COMMAND IF SDK AVAILABLE: flutter pub get; flutter analyze; flutter test; flutter build apk --debug. On Windows also flutter build windows --debug.
+- DEVICE PROCEDURE: docs/PHASE0_DEVICE_TESTS.md. Use development data only.
+- EXPECTED RESULT: successful Android and Windows jobs and downloadable debug artifacts; record commit/run/device results before phase gate.
+- DO NOT REDO: scaffold/platform runners/specifications/auth increment. Preserve tenant boundaries and architecture. Do not claim all ERP phases complete or merge unfinished Phase 0 as a release.
