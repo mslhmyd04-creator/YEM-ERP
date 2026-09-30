@@ -163,6 +163,6 @@ class _WorkspaceState extends State<_Workspace> {
         if (message != null) ...[Text(message!, key: const Key('status-message')), const SizedBox(height: 16)],
         if (services != null) signedIn ? _catalog(services!) : _identity(services!),
         if (failedOpen) FilledButton(onPressed: busy ? null : _open, child: const Text('إعادة المحاولة')),
-      ]))),
+      ])))),
   );
 }
