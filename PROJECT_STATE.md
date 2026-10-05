@@ -16,3 +16,5 @@
 - Next Task: implement exact-money and balanced atomic posting foundation before expense/custody/invoice workflows. Preserve immutable posted records and reject conflicting duplicate references.
 - Exact Next Command: flutter pub get && flutter analyze && flutter test && flutter build apk --debug. On Windows also flutter build windows --debug.
 - Device Status: secure credential backend, installation and actual layout checks NOT VERIFIED; follow docs/PHASE0_DEVICE_TESTS.md.
+
+- Financial foundation implemented with migration 006 and exact posting/retry/immutability tests; native verification PENDING CI. Business financial forms remain pending.

@@ -10,3 +10,5 @@
 - NEXT COMMAND: python -m unittest discover -s tools -p 'check_*.py' -v; run flutter analyze/test and Android/Windows builds in GitHub Actions after changes.
 - EXPECTED RESULT: money precision, imbalance, wrong-tenant references, rollback, duplicate retry/conflict and immutability tests pass before business workflows.
 - DO NOT REDO: scaffold, SQLCipher/auth, verified master-data or administration. Keep all work in Phase 0. Phases 1–9 and release/device acceptance remain pending.
+
+- Current checkpoint: inspect financial-foundation CI before adding business workflows. New migration 006 and eight Flutter tests plus three Python SQL guard tests are pending native verification.

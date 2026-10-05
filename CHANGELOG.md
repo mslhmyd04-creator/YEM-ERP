@@ -34,3 +34,5 @@
 - Bind pending administrative changes to the original session object; logout/re-login during hashing cancels the request, even for the same user. Regression test added.
 
 - 2026-10-05: Administration verified in 37340719874: analysis, 36 Flutter tests on each runner, 10 SQL checks, Android/Windows builds and package uploads PASS. Widget fixtures run outside FakeAsync and unfocus before scrolling/tapping.
+
+- 2026-10-05: Add migration 006, exact money parsing, account/journal repository and central posting engine with company boundaries, balanced finalization, immutable posted records and conflict-aware retries. Verification PENDING CI.

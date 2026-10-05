@@ -28,7 +28,7 @@ class LocalAuthService {
   LocalSession? _session;
   bool _busy = false;
 
-  static List<String> get permissions => ['products.view', 'products.create', 'products.archive', 'administration.manage', ...MasterDataService.permissions];
+  static List<String> get permissions => ['products.view', 'products.create', 'products.archive', 'administration.manage', 'finance.view', 'finance.post', ...MasterDataService.permissions];
   bool get needsSetup => db.select('SELECT count(*) AS n FROM companies').single['n'] == 0;
 
   Future<void> bootstrap({required String companyName, required String branchName,

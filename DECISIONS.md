@@ -14,3 +14,5 @@
 - 2026-10-05: Branch editing reuses the authorized master-data flow and preserves IDs referenced by users/warehouses. Branch create/update permissions are separate; migration 004 upgrades only the bootstrap manager.
 
 - 2026-10-05: User edits increment auth_revision; sessions validate it on each operation and login rechecks it after hashing. Transactions prevent removal of the last active user holding administration.manage. Password reset hashes off the UI isolate, revalidates actor permission, invalidates old sessions and audits without storing secret values.
+
+- 2026-10-05: Phase 0 financial foundation supports YER at two-decimal fixed precision and rejects unsupported currencies. Amounts and balanced totals are exact integers with explicit limits; balances accumulate as BigInt. Posted journals/lines are immutable, retries use company/business-reference UUID and canonical payload; audit/sequence/posting commit together. Migration permission upgrade uses bootstrap audit and current management permission so role renaming does not break it. Full multi-currency/fiscal/stock/reversal workflows remain later work.
