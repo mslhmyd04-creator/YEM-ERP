@@ -16,3 +16,5 @@
 - 2026-10-05 / Phase 0 / run 37337178600: analyzer unawaited_return_in_try_block on generic synchronous transaction in async user save. Specify transaction result as String so it cannot infer a Future result. CI recheck pending.
 
 - 2026-10-05 / Phase 0: administration Flutter tests exceed expected runtime on both runners; add expanded test reporting and a two-minute per-test timeout to identify blocked test. Diagnosis pending CI; do not add features before verification.
+
+- 2026-10-05 / run 37338775503: 34 Flutter tests passed, one role/user widget assertion failed after a missed CheckboxListTile tap; next widget test did not finish. Add a settled frame after scrolling, bounded pumpAndSettle and checkpoints to diagnose remaining wait. Verification pending.

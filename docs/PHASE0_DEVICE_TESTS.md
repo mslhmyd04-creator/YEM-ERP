@@ -21,6 +21,9 @@ Open the latest successful Phase 0 checks run in GitHub Actions. Download `yem-e
 | Master data | From catalog open البيانات الأساسية; create/edit a branch, customer, supplier, category, unit and warehouse | Records persist after restart; warehouse is tied to chosen institution branch | NOT VERIFIED |
 | Branch references | Rename an existing branch referenced by a user and warehouse | References stay intact; warehouse branch selector displays the renamed branch | NOT VERIFIED |
 | Product category | Add category and unit in master data, return to products and create an item with both | Item retains category/unit identities after renaming either record | NOT VERIFIED |
+| Administration | Create a role with customers.view only; create a user assigned to that role; log in as that user | Master data is accessible; customer creation and administration are denied | NOT VERIFIED |
+| Last administrator | Attempt to disable the sole administrator or remove administration.manage from the sole manager role | Operation denied; administrator remains active and can manage users | NOT VERIFIED |
+| Password reset | Create a second administrator, reset a test user password, attempt old/new login | Old password rejected; new password accepted; old session invalidated | NOT VERIFIED |
 | Logout | Logout and attempt to use catalog | Login required | NOT VERIFIED |
 | Session expiry | Remain logged in for 30 minutes, then perform an operation | Operation denied and login offered | NOT VERIFIED |
 | Secure-storage failure | In an isolated test installation, remove stored database credential while retaining its encrypted file | Startup fails closed; retry offered; no replacement database or setup | NOT VERIFIED |
@@ -32,4 +35,4 @@ Record OS version, device model, artifact commit, time, result and any error. Do
 
 CI covers encryption/file reopening, missing/wrong keys, migration upgrade/rollback, tenant references, Argon2 verification, persistent account lockout, permissions/session expiration and a setup/login/create/archive widget workflow. Device credential storage, installation and native desktop runtime behavior still require the checks above.
 
-Remaining Phase 0 work includes customer/warehouse and other master data workflows, expense/custody, basic invoice and PDF. Offline/online variants, release identity/signing, backups and later ERPNext/integration phases are not complete.
+Master-data and branch flows have automated coverage. User/role administration verification is pending CI. Remaining Phase 0 work includes expense/custody, basic invoice and PDF. Offline/online variants, release identity/signing, backups and later ERPNext/integration phases are not complete.
