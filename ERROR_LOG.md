@@ -22,3 +22,5 @@
 - 2026-10-05 / run 37339491809: diagnostic test used named pumpAndSettle timeout; Flutter API takes positional duration/phase/timeout. Corrected against official WidgetTester API. CI recheck pending.
 
 - 2026-10-05 / run 37339837101: focused text field scrolled back over revealed checkbox; following test blocked before initial form setup. Move migration/bootstrap fixtures to setUp outside FakeAsync, unfocus before reveal/tap and assert hit testing. Recheck pending.
+
+- 2026-10-05: Administration analyzer, scroll/focus and blocked second widget fixture issues RESOLVED in 37340719874; all 36 Flutter tests pass on both runners, analysis and both builds PASS. SQL checks PASS.

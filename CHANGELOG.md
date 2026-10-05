@@ -32,3 +32,5 @@
 - 2026-10-05: Add audited user/role administration, limited-user dashboard navigation, session revision invalidation and migration 005; administration/security/UI tests added; CI pending.
 
 - Bind pending administrative changes to the original session object; logout/re-login during hashing cancels the request, even for the same user. Regression test added.
+
+- 2026-10-05: Administration verified in 37340719874: analysis, 36 Flutter tests on each runner, 10 SQL checks, Android/Windows builds and package uploads PASS. Widget fixtures run outside FakeAsync and unfocus before scrolling/tapping.

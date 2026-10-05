@@ -13,7 +13,7 @@
 - [ ] Verify migration upgrades and rollback on devices (first-open integration passed CI).
 - [x] Add first-company/branch/admin setup, local authentication, stored role permissions and permission checks.
 - [x] Test local lockout, session expiry, revoked permissions and audited product rollback in CI.
-- [ ] Add user/role/branch administration UI.
+- [x] Add user/role/branch administration UI; security and widget tests pass in run 37340719874.
 - [x] Add authorized Arabic setup/login/product UI and widget workflow tests.
 - [x] Verify company-scoped product repository create/list/archive tests in CI.
 - [x] Verify Windows SQLCipher tests and debug build in GitHub CI (36465256956).
