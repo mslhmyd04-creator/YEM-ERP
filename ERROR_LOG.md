@@ -18,3 +18,5 @@
 - 2026-10-05 / Phase 0: administration Flutter tests exceed expected runtime on both runners; add expanded test reporting and a two-minute per-test timeout to identify blocked test. Diagnosis pending CI; do not add features before verification.
 
 - 2026-10-05 / run 37338775503: 34 Flutter tests passed, one role/user widget assertion failed after a missed CheckboxListTile tap; next widget test did not finish. Add a settled frame after scrolling, bounded pumpAndSettle and checkpoints to diagnose remaining wait. Verification pending.
+
+- 2026-10-05 / run 37339491809: diagnostic test used named pumpAndSettle timeout; Flutter API takes positional duration/phase/timeout. Corrected against official WidgetTester API. CI recheck pending.
