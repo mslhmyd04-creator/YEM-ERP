@@ -16,6 +16,7 @@ class ProductRepository {
     required String name,
     required String sku,
     String? categoryId,
+    bool isStockItem = true,
   }) {
     final id = newUuid();
     final product = Product(
@@ -26,12 +27,13 @@ class ProductRepository {
       sku: sku.trim(),
       isActive: true,
       categoryId: categoryId,
+      isStockItem: isStockItem,
     );
     final now = DateTime.now().toUtc().toIso8601String();
     _db.execute(
-      'INSERT INTO products(id, company_id, unit_id, name, sku, category_id, created_at, updated_at) '
-      'VALUES(?,?,?,?,?,?,?,?)',
-      [product.id, product.companyId, product.unitId, product.name, product.sku, product.categoryId, now, now],
+      'INSERT INTO products(id, company_id, unit_id, name, sku, category_id, created_at, updated_at, is_stock_item) '
+      'VALUES(?,?,?,?,?,?,?,?,?)',
+      [product.id, product.companyId, product.unitId, product.name, product.sku, product.categoryId, now, now, isStockItem ? 1 : 0],
     );
     return product;
   }
@@ -39,7 +41,7 @@ class ProductRepository {
   List<Product> listForCompany(String companyId, {bool includeArchived = false}) {
     if (companyId.trim().isEmpty) throw ArgumentError.value(companyId, 'companyId');
     final rows = _db.select(
-      'SELECT id, company_id, unit_id, name, sku, is_active, category_id FROM products '
+      'SELECT id, company_id, unit_id, name, sku, is_active, category_id, is_stock_item FROM products '
       'WHERE company_id = ? ${includeArchived ? '' : 'AND is_active = 1'} ORDER BY name, id',
       [companyId],
     );
@@ -64,6 +66,7 @@ class ProductRepository {
         sku: row['sku'] as String,
         isActive: row['is_active'] == 1,
         categoryId: row['category_id'] as String?,
+        isStockItem: row['is_stock_item']==1,
       );
 
 }

@@ -94,7 +94,7 @@ void main() {
       await LocalMigrations.apply(old);
       await LocalMigrations.apply(old);
       expect(old.select("SELECT permission_code FROM role_permissions WHERE role_id='reader'"), isEmpty);
-      expect(old.select('SELECT count(*) AS n FROM role_permissions').single['n'], 24);
+      expect(old.select('SELECT count(*) AS n FROM role_permissions').single['n'], 26);
       expect(old.select('SELECT password_hash FROM users').single['password_hash'], 'test:$password');
     } finally { old.close(); }
   });

@@ -6,6 +6,8 @@ class PermissionOption {
   final String label;
   static List<PermissionOption> get all => [
     const PermissionOption('administration.manage', 'إدارة المستخدمين والأدوار'),
+    const PermissionOption('sales.view', 'عرض فواتير البيع'),
+    const PermissionOption('sales.create', 'إنشاء فاتورة بيع'),
     const PermissionOption('finance.view', 'عرض السجل المالي'),
     const PermissionOption('finance.post', 'ترحيل العمليات المالية'),
     const PermissionOption('products.view', 'عرض الأصناف'),

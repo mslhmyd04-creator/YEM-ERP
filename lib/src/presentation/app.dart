@@ -5,6 +5,7 @@ import '../application/local_auth_service.dart';
 import 'master_data_page.dart';
 import 'administration_page.dart';
 import 'finance_page.dart';
+import 'sales_page.dart';
 import '../domain/master_record.dart';
 
 class YemErpApp extends StatelessWidget {
@@ -37,6 +38,7 @@ class _WorkspaceState extends State<_Workspace> {
   String? companyId;
   String? unitId;
   String? categoryId;
+  bool isStockItem = true;
   final company = TextEditingController();
   final branch = TextEditingController();
   final username = TextEditingController();
@@ -137,10 +139,11 @@ class _WorkspaceState extends State<_Workspace> {
           items: [const DropdownMenuItem(value: '', child: Text('بدون فئة')),
             ...categories.map((item) => DropdownMenuItem(value: item.id, child: Text(item.name)))],
           onChanged: busy ? null : (value) => setState(() => categoryId = value == '' ? null : value)),
+        CheckboxListTile(title: const Text('صنف مخزني'), value: isStockItem, onChanged: busy ? null : (v)=>setState(()=>isStockItem=v??true)),
         const SizedBox(height: 16),
         FilledButton(onPressed: busy || !app.auth.hasPermission('products.create') ? null : () => _perform(() async {
           if (unitId == null) throw const AccessDenied('اختر الوحدة.');
-          app.products.create(unitId: unitId!, name: name.text, sku: sku.text, categoryId: categoryId);
+          app.products.create(unitId: unitId!, name: name.text, sku: sku.text, categoryId: categoryId, isStockItem: isStockItem);
           name.clear(); sku.clear();
         }), child: const Text('إضافة صنف')),
         const SizedBox(height: 24),
@@ -170,6 +173,8 @@ class _WorkspaceState extends State<_Workspace> {
       OutlinedButton(onPressed: busy ? null : () => _navigate(MasterDataPage(services: app)), child: const Text('البيانات الأساسية')),
     if (app.auth.hasPermission('administration.manage'))
       OutlinedButton(onPressed: busy ? null : () => _navigate(AdministrationPage(services: app)), child: const Text('المستخدمون والأدوار')),
+    if (app.auth.hasPermission('sales.view'))
+      OutlinedButton(onPressed: busy ? null : () => _navigate(SalesPage(services: app)), child: const Text('فواتير البيع والمخزون')),
     if (app.auth.hasPermission('finance.view'))
       OutlinedButton(onPressed: busy ? null : () => _navigate(FinancePage(services: app)), child: const Text('المصروفات والعهد')),
     TextButton(onPressed: busy ? null : () => _perform(() async {

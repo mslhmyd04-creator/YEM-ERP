@@ -6,6 +6,9 @@ import 'master_data_service.dart';
 import 'administration_service.dart';
 import 'posting_engine.dart';
 import 'financial_service.dart';
+import 'inventory_engine.dart';
+import 'sales_service.dart';
+import '../data/sales_repository.dart';
 import '../data/financial_repository.dart';
 import '../data/journal_repository.dart';
 import '../data/administration_repository.dart';
@@ -27,6 +30,9 @@ class AppServices {
     administration = AdministrationService(auth, AdministrationRepository(auth.db));
     posting = PostingEngine(auth, JournalRepository(auth.db));
     finance = FinancialService(auth, posting, FinancialRepository(auth.db));
+    final salesRepository=SalesRepository(auth.db);
+    inventory=InventoryEngine(auth,posting,salesRepository);
+    sales=SalesService(auth,posting,finance,inventory,salesRepository);
   }
   final LocalAuthService auth;
   late final ProductService products;
@@ -34,6 +40,8 @@ class AppServices {
   late final AdministrationService administration;
   late final PostingEngine posting;
   late final FinancialService finance;
+  late final InventoryEngine inventory;
+  late final SalesService sales;
   final void Function()? _close;
 
   static Future<AppServices> open() async {

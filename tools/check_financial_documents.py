@@ -8,8 +8,8 @@ class FinancialDocumentMigrationTest(unittest.TestCase):
     tearDown = check_posting.PostingMigrationTest.tearDown
 
     def custody(self):
-        self.db.execute("INSERT INTO accounts VALUES('holding','a','holding','Holding','custody','YER')")
-        self.db.execute("INSERT INTO accounts VALUES('expense','a','expense','Expense','expense','YER')")
+        self.db.execute("INSERT INTO accounts(id,company_id,code,name,kind,currency_code) VALUES('holding','a','holding','Holding','custody','YER')")
+        self.db.execute("INSERT INTO accounts(id,company_id,code,name,kind,currency_code) VALUES('expense','a','expense','Expense','expense','YER')")
         self.db.execute("INSERT INTO expense_categories(id,company_id,code,name,account_id) VALUES('cat','a','other','Other','expense')")
         self.db.execute("UPDATE journal_entries SET reference_type='custodyIssue',reference_id='cu' WHERE id='j'")
         self.db.execute("INSERT INTO journal_entry_lines VALUES('j',0,'a','YER','holding',100,0)")

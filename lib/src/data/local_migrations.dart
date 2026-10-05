@@ -2,7 +2,7 @@ import 'package:flutter/services.dart';
 import 'package:sqlite3/sqlite3.dart';
 
 class LocalMigrations {
-  static const latestVersion = 7;
+  static const latestVersion = 8;
   static const assets = [
     'lib/src/data/migrations/001_core.sql',
     'lib/src/data/migrations/002_local_auth.sql',
@@ -11,6 +11,7 @@ class LocalMigrations {
     'lib/src/data/migrations/005_administration.sql',
     'lib/src/data/migrations/006_financial_posting.sql',
     'lib/src/data/migrations/007_expense_custody.sql',
+    'lib/src/data/migrations/008_basic_sales_stock.sql',
   ];
 
   static Future<void> apply(Database db, {Future<String> Function(int)? load}) async {

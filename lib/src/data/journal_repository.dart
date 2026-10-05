@@ -4,13 +4,21 @@ import '../domain/journal.dart';
 class JournalRepository {
   JournalRepository(this.db);
   final Database db;
-  List<LedgerAccount> accounts(String company) => db.select('SELECT id,code,name,kind FROM accounts WHERE company_id=? ORDER BY code', [company])
+  bool get _extended => db.select('PRAGMA table_info(accounts)').any((r)=>r['name']=='account_type');
+  List<LedgerAccount> accounts(String company) => db.select("SELECT id,code,name,${_extended ? 'coalesce(account_type,kind)' : 'kind'} AS kind FROM accounts WHERE company_id=? ORDER BY code", [company])
     .map((r) => LedgerAccount(r['id'] as String, r['code'] as String, r['name'] as String, AccountKind.values.byName(r['kind'] as String))).toList();
   bool ownsBranch(String company, String branch) => db.select('SELECT 1 FROM branches WHERE id=? AND company_id=?', [branch,company]).isNotEmpty;
   bool ownsAccount(String company, String id) => db.select("SELECT 1 FROM accounts WHERE id=? AND company_id=? AND currency_code='YER'", [id,company]).isNotEmpty;
   String currency(String company) => db.select('SELECT currency_code FROM companies WHERE id=?', [company]).single['currency_code'] as String;
-  void addAccount(String company, String id, String code, String name, AccountKind kind) => db.execute(
-    "INSERT INTO accounts(id,company_id,code,name,kind,currency_code) VALUES(?,?,?,?,?,'YER')", [id,company,code,name,kind.name]);
+  void addAccount(String company, String id, String code, String name, AccountKind kind) {
+    if (_extended) {
+      final base = kind==AccountKind.inventory ? 'receivable' : (kind==AccountKind.costOfSales ? 'expense' : kind.name);
+      db.execute("INSERT INTO accounts(id,company_id,code,name,kind,currency_code,account_type) VALUES(?,?,?,?,?,'YER',?)",[id,company,code,name,base,kind.name]);
+    } else {
+      if (kind==AccountKind.inventory || kind==AccountKind.costOfSales) { throw StateError('Account schema needs migration.'); }
+      db.execute("INSERT INTO accounts(id,company_id,code,name,kind,currency_code) VALUES(?,?,?,?,?,'YER')",[id,company,code,name,kind.name]);
+    }
+  }
   Row? existing(String company, FinancialReference type, String reference) {
     final rows = db.select('SELECT id,canonical_request,posted FROM journal_entries WHERE company_id=? AND reference_type=? AND reference_id=?', [company,type.name,reference]);
     return rows.isEmpty ? null : rows.single;

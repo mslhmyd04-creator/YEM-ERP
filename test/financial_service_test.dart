@@ -101,7 +101,7 @@ void main(){
       final r=PostingRequest(reference:FinancialReference.openingBalance,referenceId:newUuid(),branchId:legacy.administration.branches().single.id,date:'2026-10-05',description:'Opening',lines:[JournalLine(accountId:c,debit:Money(10000),credit:Money(0)),JournalLine(accountId:e,debit:Money(0),credit:Money(10000))]);
       final id=legacy.posting.post(r);await LocalMigrations.apply(old);await LocalMigrations.apply(old);
       expect(legacy.posting.post(r),id);expect(legacy.posting.entries(),hasLength(1));expect(legacy.posting.balance(c),BigInt.from(10000));
-      expect(legacy.finance.custodies(),isEmpty);expect(old.select('PRAGMA user_version').single.values.first,7);expect(old.select('PRAGMA foreign_key_check'),isEmpty);
+      expect(legacy.finance.custodies(),isEmpty);expect(old.select('PRAGMA user_version').single.values.first,8);expect(old.select('PRAGMA foreign_key_check'),isEmpty);
     }finally{old.close();}
   });
 

@@ -1,6 +1,6 @@
 import 'money.dart';
 
-enum AccountKind { cash, custody, expense, sales, receivable, equity }
+enum AccountKind { cash, custody, expense, sales, receivable, equity, inventory, costOfSales }
 enum FinancialReference { openingBalance, custodyIssue, expense, salesInvoice }
 
 class LedgerAccount {

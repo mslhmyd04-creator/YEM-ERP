@@ -9,6 +9,7 @@ class Product {
     required this.sku,
     required this.isActive,
     this.categoryId,
+    this.isStockItem = true,
   }) {
     if ([id, companyId, unitId, name, sku].any((value) => value.trim().isEmpty)) {
       throw ArgumentError('Product identity, company, unit, name and SKU are required.');
@@ -21,5 +22,6 @@ class Product {
   final String name;
   final String sku;
   final bool isActive;
+  final bool isStockItem;
   final String? categoryId;
 }
