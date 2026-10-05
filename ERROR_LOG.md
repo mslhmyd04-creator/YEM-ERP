@@ -32,3 +32,5 @@
 - 2026-10-05 / Phase 0 / local SQL checks: migration 007 initially placed table CHECK before later columns, causing SQLite syntax error near journal_entry_id. Move table constraints after all column definitions. RESOLVED in local SQL checks; native recheck pending.
 
 - 2026-10-05: Migration 007 column/constraint ordering RESOLVED; run 37345926353 passes analysis, 53 Flutter tests per runner, 15 SQL checks and both native builds.
+
+- Migration 008 CASE/trigger terminator syntax corrected before upload; local direct SQL stock/journal mismatch guards pass. Stock/sales native analysis/tests and both builds PASS in 37349903517. PDF increment pending CI/visual QA.

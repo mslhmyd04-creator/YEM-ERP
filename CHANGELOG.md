@@ -42,3 +42,5 @@
 - 2026-10-05: Add basic cash funding, custody issue, cash/custody expenses and Arabic forms. Migration 007 verifies document/journal links and immutable custody movements; business writes share the posting transaction, retries compare full category/owner/source payload and insufficient funds are rejected. Native verification PENDING CI.
 
 - 2026-10-05: Basic expense/custody increment verified in 37345926353: analysis, 53 Flutter tests per runner, 15 SQL checks, both builds and debug uploads PASS. Basic invoice/PDF and physical-device acceptance remain pending.
+
+- 2026-10-05: Basic stock opening/cash and credit sales verified in 37349903517 (code f4e86a454b6f3e93ba00be0f02e57768bc89c371): analysis, both Flutter test suites, 17 SQL checks and Android/Windows debug builds PASS. Add offline Arabic invoice PDF and session-aware native print boundary; PDF/native verification pending.

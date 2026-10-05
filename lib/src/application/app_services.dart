@@ -8,6 +8,7 @@ import 'posting_engine.dart';
 import 'financial_service.dart';
 import 'inventory_engine.dart';
 import 'sales_service.dart';
+import 'invoice_pdf_service.dart';
 import '../data/sales_repository.dart';
 import '../data/financial_repository.dart';
 import '../data/journal_repository.dart';
@@ -33,6 +34,7 @@ class AppServices {
     final salesRepository=SalesRepository(auth.db);
     inventory=InventoryEngine(auth,posting,salesRepository);
     sales=SalesService(auth,posting,finance,inventory,salesRepository);
+    invoicePdf=InvoicePdfService(auth,sales);
   }
   final LocalAuthService auth;
   late final ProductService products;
@@ -42,6 +44,7 @@ class AppServices {
   late final FinancialService finance;
   late final InventoryEngine inventory;
   late final SalesService sales;
+  late final InvoicePdfService invoicePdf;
   final void Function()? _close;
 
   static Future<AppServices> open() async {

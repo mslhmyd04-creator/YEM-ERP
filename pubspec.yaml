@@ -13,6 +13,8 @@ dependencies:
   flutter_secure_storage: ^11.2.0
   path_provider: ^2.1.5
   cryptography: ^2.9.0
+  pdf: ^3.13.1
+  printing: ^5.15.1
 
 dev_dependencies:
   flutter_test:
@@ -22,6 +24,7 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
+    - assets/fonts/Amiri-Regular.ttf
     - lib/src/data/migrations/001_core.sql
     - lib/src/data/migrations/002_local_auth.sql
     - lib/src/data/migrations/003_master_permissions.sql

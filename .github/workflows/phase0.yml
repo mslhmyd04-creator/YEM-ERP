@@ -54,6 +54,13 @@ jobs:
           name: flutter-test-log-linux
           path: flutter-test.log
           retention-days: 7
+      - name: Preserve Arabic PDF visual QA fixture
+        uses: actions/upload-artifact@v4
+        with:
+          name: invoice-arabic-qa
+          path: build/test-output/invoice-arabic-qa.pdf
+          if-no-files-found: error
+          retention-days: 14
       - name: Build Android debug app
         run: flutter build apk --debug
       - name: Upload Android development package

@@ -37,3 +37,6 @@ Phases 1–9 remain blocked until phase 0 passes its gate.
 - Phase 7: Flutter Windows workflows, reporting, printing and desktop build checks.
 - Phase 8: encryption, device activation, backup/restore, audit and security checks.
 - Phase 9: signed releases, migration/integration/regression checks and deployment packages.
+
+- [x] Verify basic immutable stock opening and atomic cash/credit/service sales invoices (37349903517).
+- [ ] Verify bundled Arabic PDF rendering, pagination and native print builds.

@@ -16,3 +16,5 @@
 - Next Task: implement basic sales invoices and PDF. For stocked goods, add basic stock opening/ledger and sale-cost posting before invoices; preserve exact values, negative-stock rejection and atomic document/GL/stock commits.
 - Exact Next Command: flutter pub get && flutter analyze && flutter test && flutter build apk --debug. On Windows also flutter build windows --debug.
 - Device Status: secure credential backend, installation and actual layout checks NOT VERIFIED; follow docs/PHASE0_DEVICE_TESTS.md.
+
+- Stock/sales checkpoint: migration 008, immutable stock opening/sale movements, exact weighted-average cost and cash/credit/service invoices verified in 37349903517 / f4e86a454b6f3e93ba00be0f02e57768bc89c371. 17 SQL checks and all native jobs PASS. Offline Arabic PDF implementation currently under verification.

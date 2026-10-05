@@ -10,3 +10,5 @@
 - NEXT COMMAND: python -m unittest discover -s tools -p 'check_*.py' -v; run analysis/tests and Android/Windows builds in GitHub Actions after implementation.
 - EXPECTED RESULT: atomic business/ledger rollback, exact balances, authorization/tenant references, duplicate conflict/retry and UI tests pass with both builds.
 - DO NOT REDO: verified scaffold, encryption/auth, master data, administration or posting foundation. Keep immediate posting/no-tax-separation/no-approval/transfer/settlement limits explicit. Stay in Phase 0; Phases 1–9 and signed releases/device acceptance remain pending.
+
+- Current checkpoint: stock/sales migration 008 and services/UI pass all jobs in 37349903517. PDF implementation and four rendering/security tests are added locally; upload and verify all jobs, download invoice-arabic-qa artifact, render pages with Poppler and inspect Arabic/table/pagination. Then update the Phase 0 gate and device checklist. Physical print/install credentials remain NOT VERIFIED.

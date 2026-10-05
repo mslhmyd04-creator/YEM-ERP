@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:printing/printing.dart';
 import '../application/app_services.dart';
 import '../application/local_auth_service.dart';
 import '../domain/financial_document.dart';
@@ -13,6 +14,7 @@ class SalesPage extends StatefulWidget {
   State<SalesPage> createState()=>_SalesPageState();
 }
 class _SalesPageState extends State<SalesPage> {
+  bool printing=false;
   SalesForm form=SalesForm.invoice;
   String id=newUuid();
   String? branch,customer,cash,product,warehouse,message;
@@ -37,6 +39,20 @@ class _SalesPageState extends State<SalesPage> {
     if(!RegExp(r'^\d+$').hasMatch(text)){throw const FormatException('Whole units required.');}
     final count=int.tryParse(text);if(count==null || count<1 || count>1000000000){throw const FormatException('Quantity outside range.');}
     return InvoiceLineDraft(productId:p,warehouseId:stock?w:null,quantity:count,unitPrice:Money.parse(price.text));
+  }
+  Future<void> printInvoice(SalesInvoice invoice) async {
+    final app=widget.services;
+    setState(()=>printing=true);
+    try{
+      final session=app.auth.requirePermission('sales.view');
+      await Printing.layoutPdf(name:'${invoice.number}.pdf',onLayout:(_) async {
+        final current=app.auth.requirePermission('sales.view');
+        if(!identical(session,current)){throw const AccessDenied('تغيرت الجلسة. أعد فتح الفاتورة.');}
+        return app.invoicePdf.generate(invoice.id);
+      });
+    }on AccessDenied catch(e){if(mounted){setState(()=>message=e.message);}}
+    catch(_){if(mounted){setState(()=>message='تعذر فتح الطباعة. أعد المحاولة.');}}
+    finally{if(mounted){setState(()=>printing=false);}}
   }
   Widget content(){
     final app=widget.services;
@@ -84,7 +100,7 @@ class _SalesPageState extends State<SalesPage> {
           lines.clear();id=newUuid();price.clear();description.clear();
         }):null,child:const Text('حفظ وترحيل')),
         const SizedBox(height:24),Text('فواتير البيع',style:Theme.of(context).textTheme.titleMedium),
-        for(final invoice in app.sales.invoices())Card(child:ListTile(title:Text('${invoice.number}: ${invoice.customerName}'),subtitle:Text('${Money(invoice.totalMinor)} YER — ${invoice.isCash?'نقدي':'آجل'}'))),
+        for(final invoice in app.sales.invoices())Card(child:ListTile(title:Text('${invoice.number}: ${invoice.customerName}'),subtitle:Text('${Money(invoice.totalMinor)} YER — ${invoice.isCash?'نقدي':'آجل'}'),trailing:IconButton(tooltip:'طباعة PDF',onPressed:printing?null:()=>printInvoice(invoice),icon:const Icon(Icons.print_outlined)))),
       ]);
     }on AccessDenied catch(e){return Text(e.message);}
   }
