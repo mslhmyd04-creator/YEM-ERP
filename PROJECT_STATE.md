@@ -17,3 +17,10 @@
 - Important Decisions: DECISIONS.md
 - Files Modified: see latest commit
 - Next Task: continue customers/warehouses and other master-data workflows.
+
+## 2026-10-05 master data increment
+
+- Implemented create/edit/list for categories, units, customers, suppliers and warehouses; Arabic connected forms; product category selection.
+- Migration 003 adds granular permissions and upgrades only original bootstrap manager role.
+- 10 Python SQL checks PASS locally. Flutter analysis/tests/builds PENDING CI.
+- Current task: verify increment on Ubuntu/Windows, fix failures before additional features.

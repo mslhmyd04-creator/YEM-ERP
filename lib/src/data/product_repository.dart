@@ -15,6 +15,7 @@ class ProductRepository {
     required String unitId,
     required String name,
     required String sku,
+    String? categoryId,
   }) {
     final id = newUuid();
     final product = Product(
@@ -24,12 +25,13 @@ class ProductRepository {
       name: name.trim(),
       sku: sku.trim(),
       isActive: true,
+      categoryId: categoryId,
     );
     final now = DateTime.now().toUtc().toIso8601String();
     _db.execute(
-      'INSERT INTO products(id, company_id, unit_id, name, sku, created_at, updated_at) '
-      'VALUES(?,?,?,?,?,?,?)',
-      [product.id, product.companyId, product.unitId, product.name, product.sku, now, now],
+      'INSERT INTO products(id, company_id, unit_id, name, sku, category_id, created_at, updated_at) '
+      'VALUES(?,?,?,?,?,?,?,?)',
+      [product.id, product.companyId, product.unitId, product.name, product.sku, product.categoryId, now, now],
     );
     return product;
   }
@@ -37,7 +39,7 @@ class ProductRepository {
   List<Product> listForCompany(String companyId, {bool includeArchived = false}) {
     if (companyId.trim().isEmpty) throw ArgumentError.value(companyId, 'companyId');
     final rows = _db.select(
-      'SELECT id, company_id, unit_id, name, sku, is_active FROM products '
+      'SELECT id, company_id, unit_id, name, sku, is_active, category_id FROM products '
       'WHERE company_id = ? ${includeArchived ? '' : 'AND is_active = 1'} ORDER BY name, id',
       [companyId],
     );
@@ -61,6 +63,7 @@ class ProductRepository {
         name: row['name'] as String,
         sku: row['sku'] as String,
         isActive: row['is_active'] == 1,
+        categoryId: row['category_id'] as String?,
       );
 
 }

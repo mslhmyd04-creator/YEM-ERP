@@ -8,3 +8,5 @@
 - ADR-006 (2026-09-28): Use the `sqlite3` 3.x SQLCipher build hook on Android/Windows and `flutter_secure_storage` for the per-install raw 256-bit database key. Reject missing cipher, missing keys for existing files and wrong keys. This integration remains unverified until CI/device tests pass. References: https://pub.dev/documentation/sqlite3/latest/topics/hook-topic.html and https://www.zetetic.net/sqlcipher/sqlcipher-api/.
 
 - 2026-09-30: Local passwords use Argon2id (19 MiB, two iterations, one lane), random salt; hashing runs outside UI isolate. Session expires after 30 minutes; five failed logins lock account for 15 minutes. Migration batches are atomic and verify history before opening.
+
+- 2026-10-05: Master data uses an enum whitelist for SQL identifiers and parameterized values. Each type has separate view/create/update permissions. Migration 003 grants them only to the original bootstrap manager identified by setup audit, not every existing role. Existing IDs and tenant references remain stable during edits; deletion is not exposed.

@@ -2,6 +2,7 @@ import 'package:sqlite3/sqlite3.dart';
 
 import '../domain/identifiers.dart';
 import '../domain/password_hasher.dart';
+import 'master_data_service.dart';
 
 class AccessDenied implements Exception {
   const AccessDenied(this.message);
@@ -26,7 +27,7 @@ class LocalAuthService {
   LocalSession? _session;
   bool _busy = false;
 
-  static const permissions = ['products.view', 'products.create', 'products.archive'];
+  static List<String> get permissions => ['products.view', 'products.create', 'products.archive', ...MasterDataService.permissions];
   bool get needsSetup => db.select('SELECT count(*) AS n FROM companies').single['n'] == 0;
 
   Future<void> bootstrap({required String companyName, required String branchName,

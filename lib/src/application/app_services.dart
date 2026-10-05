@@ -1,6 +1,8 @@
 import 'package:sqlite3/sqlite3.dart';
 
 import '../data/product_repository.dart';
+import '../data/master_repository.dart';
+import 'master_data_service.dart';
 import '../infrastructure/argon2_password_hasher.dart';
 import '../infrastructure/local_database.dart';
 import 'local_auth_service.dart';
@@ -15,9 +17,11 @@ class NamedRecord {
 class AppServices {
   AppServices(this.auth, {void Function()? close}) : _close = close {
     products = ProductService(auth, ProductRepository(auth.db));
+    masterData = MasterDataService(auth, MasterRepository(auth.db));
   }
   final LocalAuthService auth;
   late final ProductService products;
+  late final MasterDataService masterData;
   final void Function()? _close;
 
   static Future<AppServices> open() async {
@@ -29,6 +33,10 @@ class AppServices {
   List<NamedRecord> get units {
     final session = auth.requirePermission('products.view');
     return _names(auth.db.select('SELECT id,name FROM units WHERE company_id=? ORDER BY name', [session.companyId]));
+  }
+  List<NamedRecord> get categories {
+    final session = auth.requirePermission('products.view');
+    return _names(auth.db.select('SELECT id,name FROM product_categories WHERE company_id=? ORDER BY name', [session.companyId]));
   }
   static List<NamedRecord> _names(ResultSet rows) => rows.map((row) => NamedRecord(row['id'] as String, row['name'] as String)).toList();
   void close() => _close?.call();

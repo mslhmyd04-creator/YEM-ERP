@@ -2,10 +2,11 @@ import 'package:flutter/services.dart';
 import 'package:sqlite3/sqlite3.dart';
 
 class LocalMigrations {
-  static const latestVersion = 2;
+  static const latestVersion = 3;
   static const assets = [
     'lib/src/data/migrations/001_core.sql',
     'lib/src/data/migrations/002_local_auth.sql',
+    'lib/src/data/migrations/003_master_permissions.sql',
   ];
 
   static Future<void> apply(Database db, {Future<String> Function(int)? load}) async {

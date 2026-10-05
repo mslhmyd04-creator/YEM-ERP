@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../application/app_services.dart';
 import '../application/local_auth_service.dart';
+import 'master_data_page.dart';
 
 class YemErpApp extends StatelessWidget {
   const YemErpApp({super.key, this.initialize});
@@ -31,6 +32,7 @@ class _WorkspaceState extends State<_Workspace> {
   String? message;
   String? companyId;
   String? unitId;
+  String? categoryId;
   final company = TextEditingController();
   final branch = TextEditingController();
   final username = TextEditingController();
@@ -110,7 +112,7 @@ class _WorkspaceState extends State<_Workspace> {
           if (companyId == null) throw const AccessDenied('اختر المؤسسة.');
           await app.auth.login(companyId: companyId!, username: username.text, password: password.text);
           if (!mounted) return;
-          setState(() { signedIn = true; unitId = app.units.isEmpty ? null : app.units.first.id; });
+          setState(() { signedIn = true; categoryId = null; unitId = app.units.isEmpty ? null : app.units.first.id; });
         }
       }), child: Text(setup ? 'إنشاء المؤسسة' : 'دخول')),
     ]);
@@ -120,20 +122,30 @@ class _WorkspaceState extends State<_Workspace> {
     try {
       final items = app.products.list();
       final units = app.units;
+      final categories = app.categories;
       return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
         Row(children: [Expanded(child: Text('الأصناف', style: Theme.of(context).textTheme.headlineSmall)),
           TextButton(onPressed: busy ? null : () => _perform(() async {
             app.auth.logout();
             setState(() { signedIn = false; name.clear(); sku.clear(); });
           }), child: const Text('تسجيل الخروج'))]),
+        OutlinedButton(onPressed: busy ? null : () async {
+          await Navigator.of(context).push<void>(MaterialPageRoute(builder: (_) => MasterDataPage(services: app)));
+          if (mounted) { setState(() {}); }
+        }, child: const Text('البيانات الأساسية')),
         field(name, 'اسم الصنف'), field(sku, 'رمز الصنف'),
         DropdownButtonFormField<String>(initialValue: unitId, decoration: const InputDecoration(labelText: 'الوحدة'),
           items: units.map((item) => DropdownMenuItem(value: item.id, child: Text(item.name))).toList(),
           onChanged: busy ? null : (value) => setState(() => unitId = value)),
+        const SizedBox(height: 12),
+        DropdownButtonFormField<String>(initialValue: categoryId ?? '', decoration: const InputDecoration(labelText: 'الفئة'),
+          items: [const DropdownMenuItem(value: '', child: Text('بدون فئة')),
+            ...categories.map((item) => DropdownMenuItem(value: item.id, child: Text(item.name)))],
+          onChanged: busy ? null : (value) => setState(() => categoryId = value == '' ? null : value)),
         const SizedBox(height: 16),
         FilledButton(onPressed: busy ? null : () => _perform(() async {
           if (unitId == null) throw const AccessDenied('اختر الوحدة.');
-          app.products.create(unitId: unitId!, name: name.text, sku: sku.text);
+          app.products.create(unitId: unitId!, name: name.text, sku: sku.text, categoryId: categoryId);
           name.clear(); sku.clear();
         }), child: const Text('إضافة صنف')),
         const SizedBox(height: 24),

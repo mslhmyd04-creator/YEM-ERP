@@ -110,5 +110,31 @@ class AuthMigrationTest(CoreMigrationTest):
             self.db.execute("INSERT INTO audit_logs(id,company_id,user_id,action,entity_type,created_at) VALUES('log','b','u1','login','users',?)", (NOW,))
 
 
+class MasterPermissionsMigrationTest(unittest.TestCase):
+    def test_upgrade_grants_only_original_manager_and_preserves_data(self):
+        db = sqlite3.connect(":memory:")
+        try:
+            db.execute("PRAGMA foreign_keys=ON")
+            root = Path(__file__).resolve().parents[1] / "lib/src/data/migrations"
+            for filename in ("001_core.sql", "002_local_auth.sql"):
+                db.executescript((root / filename).read_text())
+            db.execute("INSERT INTO companies(id,name,created_at) VALUES('a','A',?)", (NOW,))
+            db.execute("INSERT INTO branches(id,company_id,name,created_at) VALUES('ba','a','Main',?)", (NOW,))
+            db.execute("INSERT INTO users(id,company_id,branch_id,username,password_hash,created_at) VALUES('u','a','ba','admin','old-hash',?)", (NOW,))
+            for role, name in (("manager", "مدير"), ("reader", "reader")):
+                db.execute("INSERT INTO roles(id,company_id,name) VALUES(?,'a',?)", (role, name))
+                db.execute("INSERT INTO user_roles(user_id,role_id,company_id) VALUES('u',?,'a')", (role,))
+            db.execute("INSERT INTO audit_logs(id,company_id,user_id,action,entity_type,entity_id,created_at) VALUES('setup','a','u','company.bootstrap','companies','a',?)", (NOW,))
+            db.commit()
+            db.executescript("BEGIN IMMEDIATE;\n" + (root / "003_master_permissions.sql").read_text() + "\nCOMMIT;")
+            self.assertEqual(db.execute("SELECT count(*) FROM role_permissions WHERE role_id='manager'").fetchone(), (15,))
+            self.assertEqual(db.execute("SELECT count(*) FROM role_permissions WHERE role_id='reader'").fetchone(), (0,))
+            self.assertEqual(db.execute("SELECT password_hash FROM users").fetchone(), ("old-hash",))
+            self.assertEqual(db.execute("SELECT version FROM schema_migrations ORDER BY version").fetchall(), [(1,), (2,), (3,)])
+            self.assertEqual(db.execute("PRAGMA foreign_key_check").fetchall(), [])
+        finally:
+            db.close()
+
+
 if __name__ == "__main__":
     unittest.main()

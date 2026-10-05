@@ -12,11 +12,11 @@ class ProductService {
     return repository.listForCompany(session.companyId);
   }
 
-  Product create({required String unitId, required String name, required String sku}) {
+  Product create({required String unitId, required String name, required String sku, String? categoryId}) {
     final session = auth.requirePermission('products.create');
     auth.db.execute('BEGIN IMMEDIATE');
     try {
-      final product = repository.create(companyId: session.companyId, unitId: unitId, name: name, sku: sku);
+      final product = repository.create(companyId: session.companyId, unitId: unitId, name: name, sku: sku, categoryId: categoryId);
       auth.audit(companyId: session.companyId, userId: session.userId, action: 'products.create', entity: 'products', recordId: product.id);
       auth.db.execute('COMMIT');
       return product;

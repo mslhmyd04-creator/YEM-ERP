@@ -11,3 +11,7 @@
 - DEVICE PROCEDURE: docs/PHASE0_DEVICE_TESTS.md. Use development data only.
 - EXPECTED RESULT: successful Android and Windows jobs and downloadable debug artifacts; record commit/run/device results before phase gate.
 - DO NOT REDO: scaffold/platform runners/specifications/auth increment. Preserve tenant boundaries and architecture. Do not claim all ERP phases complete or merge unfinished Phase 0 as a release.
+
+## Current checkpoint: 2026-10-05
+
+Inspect CI for master-data increment. Migration 003 and tenant/permission/audit/form tests added; Flutter verification PENDING. After PASS, continue Phase 0 user/role/branch administration, then basic financial workflows. Never advance Phase 1 before Phase 0 gate.

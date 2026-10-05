@@ -20,3 +20,5 @@
 - CI now retains Android APK and complete Windows debug output for device testing; documentation-only changes skip builds.
 
 - Verified 2026-09-30: run 36752011534 passed 9 SQL checks, static analysis, 18 Flutter tests on both runners, Android/Windows builds and debug artifact uploads. Device verification remains pending.
+
+- 2026-10-05: Add master-data services/repository and Arabic create/edit forms; optional product category binding; migration 003 and upgrade/permission/tenant/audit/UI tests. Verification PENDING CI.
