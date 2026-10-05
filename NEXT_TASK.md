@@ -14,3 +14,5 @@
 - Current checkpoint: inspect administration CI, resolve any errors before continuing financial Phase 0 workflows. Prior master/branch increment remains verified.
 
 - Recheck administration CI after explicit synchronous transaction result type; run 37337178600 stopped on analyzer warning.
+
+- Administration verification now includes logout/re-login cancellation during password hashing.

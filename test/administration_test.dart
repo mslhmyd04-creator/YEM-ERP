@@ -102,6 +102,15 @@ void main() {
     hasher.pause!.complete(); await assertion;
     expect(db.select("SELECT id FROM users WHERE username='pending'"), isEmpty);
   });
+  test('logout and re-login while hashing cancel the original request', () async {
+    hasher.pause = Completer<void>();
+    final role = app.administration.roles().single.id;
+    final pending = app.administration.saveUser(username: 'Pending', branchId: branch, roleIds: {role}, active: true, password: password);
+    final assertion = expectLater(pending, throwsA(isA<AccessDenied>()));
+    app.auth.logout(); await app.auth.login(companyId: company, username: 'admin', password: password);
+    hasher.pause!.complete(); await assertion;
+    expect(db.select("SELECT id FROM users WHERE username='pending'"), isEmpty);
+  });
   test('version 4 migration preserves user data and upgrades only bootstrap manager', () async {
     final old = sqlite3.openInMemory();
     try {

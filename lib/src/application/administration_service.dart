@@ -49,7 +49,7 @@ class AdministrationService {
       }
       final hash = changePassword ? await auth.hasher.hash(secret) : null;
       final session = auth.requirePermission(permission); // Revalidate after asynchronous hashing.
-      if (session.userId != original.userId || session.companyId != original.companyId) { throw const AccessDenied('تغيرت جلسة الدخول. أعد المحاولة.'); }
+      if (!identical(session, original)) { throw const AccessDenied('تغيرت جلسة الدخول. أعد المحاولة.'); }
       final recordId = id ?? newUuid();
       return _transaction<String>(session, () {
         if ((!create && !repository.owns('users', recordId, session.companyId)) ||
@@ -76,7 +76,7 @@ class AdministrationService {
     auth.db.execute('BEGIN IMMEDIATE');
     try {
       final current = auth.requirePermission(permission);
-      if (current.userId != session.userId || current.companyId != session.companyId || current.authRevision != session.authRevision) {
+      if (!identical(current, session)) {
         throw const AccessDenied('تغيرت جلسة الدخول. أعد المحاولة.');
       }
       // Callers validate access before modifying membership/credentials.

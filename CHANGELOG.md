@@ -30,3 +30,5 @@
 - 2026-10-05: Final branch/master increment verified in run 37335012029: 10 SQL checks, analysis, 25 Flutter tests on Ubuntu/Windows, both builds and debug package uploads PASS. Physical-device acceptance still NOT VERIFIED.
 
 - 2026-10-05: Add audited user/role administration, limited-user dashboard navigation, session revision invalidation and migration 005; administration/security/UI tests added; CI pending.
+
+- Bind pending administrative changes to the original session object; logout/re-login during hashing cancels the request, even for the same user. Regression test added.
