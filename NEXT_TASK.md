@@ -1,14 +1,11 @@
 # Resume here
 
-- CURRENT PHASE: 0 — incomplete
-- WHAT WAS COMPLETED: encrypted local setup/auth, product/master/branch forms, user/role administration, exact-money and central balanced immutable journal posting; basic cash funding, custody issue and cash/custody expenses with Arabic forms. Migration 006 grants financial permissions without depending on an editable manager role name.
-- WHAT IS WORKING: run 37345926353 / code 3876735f8b47e6c9f20d931b639416a59cd441cd passed analysis, 53 Flutter tests on Ubuntu/Windows, 15 SQL checks, both debug builds and artifact uploads. Schema version 7. Android artifact 11359489873; Windows artifact 11359929981.
-- WHAT IS NOT WORKING: basic sales invoice/PDF pending; physical-device acceptance NOT VERIFIED. Posting currently supports YER with two-decimal precision only.
-- EXACT ERROR IF ANY: permission migration and schema constraint-order issues resolved; native and SQL checks pass. Local Flutter/Dart unavailable.
-- FILES MODIFIED: domain money/journal, journal repository, PostingEngine, migration 006, permission configuration and eight Flutter posting tests plus three Python SQL guard tests.
-- NEXT TASK: basic sales invoice and PDF. Stocked goods need an initial stock ledger/opening balance and exact sale-cost posting: reject negative stock, derive quantities/values from immutable movements, validate the stock snapshot under the posting lock, and commit invoice/GL/stock/audit together. Add explicit stock/non-stock product flag (existing products remain stocked), inventory/COGS account classification without rebuilding referenced account IDs, and tests. Whole-unit quantities and YER precision are Phase 0 limits; advanced inventory remains Phase 5.
-- NEXT COMMAND: python -m unittest discover -s tools -p 'check_*.py' -v; run analysis/tests and Android/Windows builds in GitHub Actions after implementation.
-- EXPECTED RESULT: atomic business/ledger rollback, exact balances, authorization/tenant references, duplicate conflict/retry and UI tests pass with both builds.
-- DO NOT REDO: verified scaffold, encryption/auth, master data, administration or posting foundation. Keep immediate posting/no-tax-separation/no-approval/transfer/settlement limits explicit. Stay in Phase 0; Phases 1–9 and signed releases/device acceptance remain pending.
-
-- Current checkpoint: stock/sales migration 008 and services/UI pass all jobs in 37349903517. PDF implementation and four rendering/security tests are added locally; upload and verify all jobs, download invoice-arabic-qa artifact, render pages with Poppler and inspect Arabic/table/pagination. Then update the Phase 0 gate and device checklist. Physical print/install credentials remain NOT VERIFIED.
+- CURRENT PHASE: 1 target intake BLOCKED; Phase 0 software gate PASS.
+- VERIFIED: run 37352094707 / code 5d8c545edab01de34072550d0eee1e1ec630f90e passes analysis, 68 Flutter tests on each runner, 17 SQL checks, both native debug builds and uploads. Schema 8.
+- COMPLETED: encrypted/auth/master/admin foundation, exact-money posting, basic expenses/custody, stock opening, cash/credit/service invoices, Arabic PDF with frozen snapshots and async session checks.
+- PDF: latest artifact 11362513485 rendered/inspected across all seven A4 pages, including 50 rows, maximum exact amount and long SKU. Explicit Inseparable keeps the total/description/note together. No current test/build/layout errors.
+- NEXT REQUIRED INPUT: ERPNext/Frappe existing site URL/version or new test host, OS, authorized execution/access route, LAN/online endpoint. See docs/PHASE1_REQUIRED_INPUTS.md. Do not request or commit plaintext secrets.
+- NEXT ACTION AFTER INPUT: inspect and isolate target, install/verify compatible Frappe/ERPNext, create yem_erp_core, explicit UUID mappings and authenticated company-scoped APIs, then integration/permission/duplicate/rollback checks. Do not start Phase 2 until Phase 1 passes.
+- DO NOT REDO: verified Phase 0 code. Retrieve latest branch documentation if local files differ; final docs checkpoint was saved through GitHub after the local shell became unresponsive.
+- DEVICE ACCEPTANCE: NOT VERIFIED; docs/PHASE0_DEVICE_TESTS.md. Debug Android/Windows artifacts 11362299404/11363252267 expire 2026-10-19.
+- LIMITS: YER/two decimals; whole quantities; immediate posting; no tax separation, full approvals/settlement/returns/serial/batch/sync/production variants.

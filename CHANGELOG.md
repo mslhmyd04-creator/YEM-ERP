@@ -44,3 +44,5 @@
 - 2026-10-05: Basic expense/custody increment verified in 37345926353: analysis, 53 Flutter tests per runner, 15 SQL checks, both builds and debug uploads PASS. Basic invoice/PDF and physical-device acceptance remain pending.
 
 - 2026-10-05: Basic stock opening/cash and credit sales verified in 37349903517 (code f4e86a454b6f3e93ba00be0f02e57768bc89c371): analysis, both Flutter test suites, 17 SQL checks and Android/Windows debug builds PASS. Add offline Arabic invoice PDF and session-aware native print boundary; PDF/native verification pending.
+
+- 2026-10-05: Phase 0 software gate PASS in 37352094707 / 5d8c545edab01de34072550d0eee1e1ec630f90e: analysis, 68 Flutter tests on each runner, 17 SQL checks, Android/Windows debug builds and uploads. Seven-page Arabic PDF inspected with Poppler; 50 lines, large exact amounts, long SKU, repeated headers and inseparable summary PASS. Physical-device acceptance and Phases 1–9 remain pending; server target required for Phase 1.

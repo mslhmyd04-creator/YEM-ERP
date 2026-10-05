@@ -21,10 +21,10 @@
 - [x] Verify branch create/edit, migration 004 and preserved user/warehouse references (37335012029).
 - [x] Add exact-money, balanced/immutable posting foundation with retry/conflict and SQL guards (37342842602).
 - [x] Add basic cash opening, custody issue and cash/custody expense forms; atomic document/journal/ledger tests and builds pass (37345926353).
-- [ ] Add basic stock-backed sales invoice and PDF printing.
-- [ ] Pass phase 0 build, unit, and migration gates.
+- [x] Add basic stock-backed sales invoice and Arabic PDF printing (37352094707).
+- [x] Pass Phase 0 software gates: analysis, 68 Flutter tests per runner, 17 SQL checks and both debug builds (37352094707).
 
-Phases 1–9 remain blocked until phase 0 passes its gate.
+Phase 0 software gate PASS. Phase 1 target intake is blocked on the server/site and execution route; Phases 2–9 remain pending.
 
 ## Later phase gates
 
@@ -39,4 +39,4 @@ Phases 1–9 remain blocked until phase 0 passes its gate.
 - Phase 9: signed releases, migration/integration/regression checks and deployment packages.
 
 - [x] Verify basic immutable stock opening and atomic cash/credit/service sales invoices (37349903517).
-- [ ] Verify bundled Arabic PDF rendering, pagination and native print builds.
+- [x] Verify bundled Arabic PDF rendering, pagination and native print builds (37352094707); user-device printing NOT VERIFIED.

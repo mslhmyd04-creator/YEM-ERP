@@ -36,3 +36,5 @@
 - Migration 008 CASE/trigger terminator syntax corrected before upload; local direct SQL stock/journal mismatch guards pass. Stock/sales native analysis/tests and both builds PASS in 37349903517. PDF increment pending CI/visual QA.
 
 - PDF CI: four analyzer diagnostics (unnecessary typed_data import and constant TextStyle constructors) fixed. Pagination assertion initially assumed spaces in PDF dictionaries; compact `/Type/Page` serialization needs optional whitespace. Corrected the format assumption; actual page count will also be checked with Poppler on the emitted artifact.
+
+- 2026-10-05: All PDF diagnostics/assertion/layout issues RESOLVED in 37352094707. Container alone still allowed a summary page break; explicit Inseparable keeps total/description/note together. Final generated artifact rendered/inspected across all seven pages; 68 native tests per runner, 17 SQL checks, analysis and both builds PASS. No supplied server target/execution route: Phase 1 deployment NOT VERIFIED.
