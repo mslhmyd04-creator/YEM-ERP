@@ -12,3 +12,5 @@
 - 2026-10-05: Master data uses an enum whitelist for SQL identifiers and parameterized values. Each type has separate view/create/update permissions. Migration 003 grants them only to the original bootstrap manager identified by setup audit, not every existing role. Existing IDs and tenant references remain stable during edits; deletion is not exposed.
 
 - 2026-10-05: Branch editing reuses the authorized master-data flow and preserves IDs referenced by users/warehouses. Branch create/update permissions are separate; migration 004 upgrades only the bootstrap manager.
+
+- 2026-10-05: User edits increment auth_revision; sessions validate it on each operation and login rechecks it after hashing. Transactions prevent removal of the last active user holding administration.manage. Password reset hashes off the UI isolate, revalidates actor permission, invalidates old sessions and audits without storing secret values.

@@ -56,15 +56,15 @@ class _MasterDataPageState extends State<MasterDataPage> {
             onChanged: (value) => setState(() => branchId = value)),
           const SizedBox(height: 12),
         ],
-        FilledButton(onPressed: () => save(selectedBranch), child: Text(editId == null ? 'إضافة سجل' : 'حفظ التعديل')),
+        FilledButton(onPressed: widget.services.auth.hasPermission('${kind.table}.${editId == null ? 'create' : 'update'}') ? () => save(selectedBranch) : null, child: Text(editId == null ? 'إضافة سجل' : 'حفظ التعديل')),
         if (editId != null) TextButton(onPressed: () => setState(reset), child: const Text('إلغاء التعديل')),
         const SizedBox(height: 20),
         if (records.isEmpty) const Text('لا توجد سجلات.'),
         for (final record in records) Card(child: ListTile(title: Text(record.name),
           subtitle: record.phone == null || record.phone!.isEmpty ? null : Text(record.phone!),
-          trailing: IconButton(tooltip: 'تعديل السجل', icon: const Icon(Icons.edit_outlined), onPressed: () => setState(() {
+          trailing: IconButton(tooltip: 'تعديل السجل', icon: const Icon(Icons.edit_outlined), onPressed: widget.services.auth.hasPermission('${kind.table}.update') ? () => setState(() {
             editId = record.id; name.text = record.name; phone.text = record.phone ?? ''; branchId = record.branchId; message = null;
-          })))),
+          }) : null))),
       ]);
     } on AccessDenied catch (error) {
       // A revoked/expired session blocks reads as well as writes.

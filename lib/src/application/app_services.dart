@@ -3,6 +3,8 @@ import 'package:sqlite3/sqlite3.dart';
 import '../data/product_repository.dart';
 import '../data/master_repository.dart';
 import 'master_data_service.dart';
+import 'administration_service.dart';
+import '../data/administration_repository.dart';
 import '../infrastructure/argon2_password_hasher.dart';
 import '../infrastructure/local_database.dart';
 import 'local_auth_service.dart';
@@ -18,10 +20,12 @@ class AppServices {
   AppServices(this.auth, {void Function()? close}) : _close = close {
     products = ProductService(auth, ProductRepository(auth.db));
     masterData = MasterDataService(auth, MasterRepository(auth.db));
+    administration = AdministrationService(auth, AdministrationRepository(auth.db));
   }
   final LocalAuthService auth;
   late final ProductService products;
   late final MasterDataService masterData;
+  late final AdministrationService administration;
   final void Function()? _close;
 
   static Future<AppServices> open() async {

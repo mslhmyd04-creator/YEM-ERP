@@ -26,6 +26,7 @@ flutter:
     - lib/src/data/migrations/002_local_auth.sql
     - lib/src/data/migrations/003_master_permissions.sql
     - lib/src/data/migrations/004_branch_permissions.sql
+    - lib/src/data/migrations/005_administration.sql
 
 hooks:
   user_defines:

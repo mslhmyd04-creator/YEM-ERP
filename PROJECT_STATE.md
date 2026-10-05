@@ -16,3 +16,5 @@
 - Next Task: implement user/role administration with company boundaries, last-administrator protection and password-change session invalidation before financial Phase 0 workflows.
 - Exact Next Command: flutter pub get && flutter analyze && flutter test && flutter build apk --debug. On Windows also flutter build windows --debug.
 - Device Status: secure credential backend, installation and actual layout checks NOT VERIFIED; follow docs/PHASE0_DEVICE_TESTS.md.
+
+- Administration increment implemented with migration 005, epoch-based session revocation, scoped role/user editors and last-administrator protection. Analysis/native tests/build PENDING CI.

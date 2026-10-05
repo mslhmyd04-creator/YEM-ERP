@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import '../application/app_services.dart';
 import '../application/local_auth_service.dart';
 import 'master_data_page.dart';
+import 'administration_page.dart';
+import '../domain/master_record.dart';
 
 class YemErpApp extends StatelessWidget {
   const YemErpApp({super.key, this.initialize});
@@ -70,8 +72,7 @@ class _WorkspaceState extends State<_Workspace> {
     } catch (_) {
       if (mounted) { setState(() => message = 'تعذر إتمام العملية. تحقق من البيانات وتأكد من عدم تكرار رمز الصنف.' ); }
     } finally {
-      password.clear(); confirmation.clear();
-      if (mounted) { setState(() => busy = false); }
+      if (mounted) { password.clear(); confirmation.clear(); setState(() => busy = false); }
     }
   }
 
@@ -113,7 +114,7 @@ class _WorkspaceState extends State<_Workspace> {
           if (companyId == null) throw const AccessDenied('اختر المؤسسة.');
           await app.auth.login(companyId: companyId!, username: username.text, password: password.text);
           if (!mounted) return;
-          setState(() { signedIn = true; categoryId = null; unitId = app.units.isEmpty ? null : app.units.first.id; });
+          setState(() { signedIn = true; categoryId = null; unitId = app.auth.hasPermission('products.view') && app.units.isNotEmpty ? app.units.first.id : null; });
         }
       }), child: Text(setup ? 'إنشاء المؤسسة' : 'دخول')),
     ]);
@@ -125,15 +126,7 @@ class _WorkspaceState extends State<_Workspace> {
       final units = app.units;
       final categories = app.categories;
       return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-        Row(children: [Expanded(child: Text('الأصناف', style: Theme.of(context).textTheme.headlineSmall)),
-          TextButton(onPressed: busy ? null : () => _perform(() async {
-            app.auth.logout();
-            setState(() { signedIn = false; name.clear(); sku.clear(); });
-          }), child: const Text('تسجيل الخروج'))]),
-        OutlinedButton(onPressed: busy ? null : () async {
-          await Navigator.of(context).push<void>(MaterialPageRoute(builder: (_) => MasterDataPage(services: app)));
-          if (mounted) { setState(() {}); }
-        }, child: const Text('البيانات الأساسية')),
+        Text('الأصناف', style: Theme.of(context).textTheme.headlineSmall),
         field(name, 'اسم الصنف'), field(sku, 'رمز الصنف'),
         DropdownButtonFormField<String>(initialValue: unitId, decoration: const InputDecoration(labelText: 'الوحدة'),
           items: units.map((item) => DropdownMenuItem(value: item.id, child: Text(item.name))).toList(),
@@ -144,7 +137,7 @@ class _WorkspaceState extends State<_Workspace> {
             ...categories.map((item) => DropdownMenuItem(value: item.id, child: Text(item.name)))],
           onChanged: busy ? null : (value) => setState(() => categoryId = value == '' ? null : value)),
         const SizedBox(height: 16),
-        FilledButton(onPressed: busy ? null : () => _perform(() async {
+        FilledButton(onPressed: busy || !app.auth.hasPermission('products.create') ? null : () => _perform(() async {
           if (unitId == null) throw const AccessDenied('اختر الوحدة.');
           app.products.create(unitId: unitId!, name: name.text, sku: sku.text, categoryId: categoryId);
           name.clear(); sku.clear();
@@ -153,7 +146,7 @@ class _WorkspaceState extends State<_Workspace> {
         if (items.isEmpty) const Text('لا توجد أصناف نشطة.'),
         for (final item in items) Card(child: ListTile(title: Text(item.name), subtitle: Text(item.sku),
           trailing: IconButton(tooltip: 'أرشفة الصنف', icon: const Icon(Icons.archive_outlined),
-            onPressed: busy ? null : () async {
+            onPressed: busy || !app.auth.hasPermission('products.archive') ? null : () async {
               final approved = await showDialog<bool>(context: context, builder: (context) => Directionality(
                 textDirection: TextDirection.rtl, child: AlertDialog(title: const Text('أرشفة الصنف؟'),
                   content: Text(item.name), actions: [TextButton(onPressed: () => Navigator.pop(context, false), child: const Text('إلغاء')),
@@ -166,6 +159,23 @@ class _WorkspaceState extends State<_Workspace> {
     }
   }
 
+  Future<void> _navigate(Widget page) async {
+    await Navigator.of(context).push<void>(MaterialPageRoute(builder: (_) => page));
+    if (mounted) { setState(() {}); }
+  }
+
+  Widget _dashboard(AppServices app) => Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+    if (MasterKind.values.any((kind) => app.auth.hasPermission('${kind.table}.view')))
+      OutlinedButton(onPressed: busy ? null : () => _navigate(MasterDataPage(services: app)), child: const Text('البيانات الأساسية')),
+    if (app.auth.hasPermission('administration.manage'))
+      OutlinedButton(onPressed: busy ? null : () => _navigate(AdministrationPage(services: app)), child: const Text('المستخدمون والأدوار')),
+    TextButton(onPressed: busy ? null : () => _perform(() async {
+      app.auth.logout();
+      setState(() { signedIn = false; name.clear(); sku.clear(); });
+    }), child: const Text('تسجيل الخروج')),
+    _catalog(app),
+  ]);
+
   @override
   Widget build(BuildContext context) => Scaffold(
     appBar: AppBar(title: const Text('YEM ERP')),
@@ -174,7 +184,7 @@ class _WorkspaceState extends State<_Workspace> {
         const Text('المرحلة 0 — نسخة تطوير'), const SizedBox(height: 16),
         if (busy) const LinearProgressIndicator(),
         if (message != null) ...[Text(message!, key: const Key('status-message')), const SizedBox(height: 16)],
-        if (services != null) signedIn ? _catalog(services!) : _identity(services!),
+        if (services != null) signedIn ? _dashboard(services!) : _identity(services!),
         if (failedOpen) FilledButton(onPressed: busy ? null : _open, child: const Text('إعادة المحاولة')),
       ])))),
   );

@@ -12,10 +12,11 @@ class AccessDenied implements Exception {
 }
 
 class LocalSession {
-  const LocalSession({required this.userId, required this.companyId, required this.expiresAt});
+  const LocalSession({required this.userId, required this.companyId, required this.expiresAt, required this.authRevision});
   final String userId;
   final String companyId;
   final DateTime expiresAt;
+  final int authRevision;
 }
 
 class LocalAuthService {
@@ -27,7 +28,7 @@ class LocalAuthService {
   LocalSession? _session;
   bool _busy = false;
 
-  static List<String> get permissions => ['products.view', 'products.create', 'products.archive', ...MasterDataService.permissions];
+  static List<String> get permissions => ['products.view', 'products.create', 'products.archive', 'administration.manage', ...MasterDataService.permissions];
   bool get needsSetup => db.select('SELECT count(*) AS n FROM companies').single['n'] == 0;
 
   Future<void> bootstrap({required String companyName, required String branchName,
@@ -89,6 +90,7 @@ class LocalAuthService {
       final current = db.select('SELECT * FROM users WHERE id=? AND company_id=?', [user, companyId]);
       if (current.isEmpty || current.single['is_active'] != 1 ||
           current.single['password_hash'] != row['password_hash'] ||
+          current.single['auth_revision'] != row['auth_revision'] ||
           (current.single['locked_until_ms'] as int) > _clock().millisecondsSinceEpoch) {
         throw const AccessDenied('بيانات الدخول غير صحيحة.');
       }
@@ -108,7 +110,7 @@ class LocalAuthService {
       rethrow;
     }
     if (!accepted) throw const AccessDenied('بيانات الدخول غير صحيحة.');
-    _session = LocalSession(userId: user, companyId: companyId, expiresAt: _clock().add(const Duration(minutes: 30)));
+    _session = LocalSession(userId: user, companyId: companyId, expiresAt: _clock().add(const Duration(minutes: 30)), authRevision: row['auth_revision'] as int);
   });
 
   LocalSession requirePermission(String permission) {
@@ -117,8 +119,8 @@ class LocalAuthService {
       _session = null;
       throw const AccessDenied('سجّل الدخول أولًا.');
     }
-    final active = db.select('SELECT is_active FROM users WHERE id=? AND company_id=?', [session.userId, session.companyId]);
-    if (active.isEmpty || active.single['is_active'] != 1) {
+    final active = db.select('SELECT is_active,auth_revision FROM users WHERE id=? AND company_id=?', [session.userId, session.companyId]);
+    if (active.isEmpty || active.single['is_active'] != 1 || active.single['auth_revision'] != session.authRevision) {
       _session = null;
       throw const AccessDenied('الحساب غير نشط.');
     }
@@ -127,6 +129,10 @@ class LocalAuthService {
       [session.userId, session.companyId, permission]);
     if (allowed.isEmpty) throw const AccessDenied('لا تملك صلاحية هذه العملية.');
     return session;
+  }
+
+  bool hasPermission(String code) {
+    try { requirePermission(code); return true; } on AccessDenied { return false; }
   }
 
   void logout() {
