@@ -18,6 +18,8 @@ Open the latest successful Phase 0 checks run in GitHub Actions. Download `yem-e
 | Create | Add Camera / C1 / default unit | Item appears; blank fields and duplicate SKU are rejected | NOT VERIFIED |
 | Restart | Fully close application; reopen and login | Requires login again; company and item remain | NOT VERIFIED |
 | Archive | Cancel archive, then confirm it | Cancel preserves item; confirm removes it from active list | NOT VERIFIED |
+| Master data | From catalog open البيانات الأساسية; create/edit a customer, supplier, category, unit and warehouse | Records persist after restart; warehouse is tied to chosen institution branch | NOT VERIFIED |
+| Product category | Add category and unit in master data, return to products and create an item with both | Item retains category/unit identities after renaming either record | NOT VERIFIED |
 | Logout | Logout and attempt to use catalog | Login required | NOT VERIFIED |
 | Session expiry | Remain logged in for 30 minutes, then perform an operation | Operation denied and login offered | NOT VERIFIED |
 | Secure-storage failure | In an isolated test installation, remove stored database credential while retaining its encrypted file | Startup fails closed; retry offered; no replacement database or setup | NOT VERIFIED |

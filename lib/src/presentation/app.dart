@@ -13,6 +13,7 @@ class YemErpApp extends StatelessWidget {
     title: 'YEM ERP',
     debugShowCheckedModeBanner: false,
     theme: ThemeData(colorSchemeSeed: const Color(0xFF174B74), useMaterial3: true),
+    darkTheme: ThemeData(colorSchemeSeed: const Color(0xFF174B74), brightness: Brightness.dark, useMaterial3: true),
     home: Directionality(textDirection: TextDirection.rtl, child: _Workspace(initialize: initialize ?? AppServices.open)),
   );
 }

@@ -22,3 +22,5 @@
 - Verified 2026-09-30: run 36752011534 passed 9 SQL checks, static analysis, 18 Flutter tests on both runners, Android/Windows builds and debug artifact uploads. Device verification remains pending.
 
 - 2026-10-05: Add master-data services/repository and Arabic create/edit forms; optional product category binding; migration 003 and upgrade/permission/tenant/audit/UI tests. Verification PENDING CI.
+
+- 2026-10-05: Verified master data in run 37333836540. Add branch create/edit with stable references, migration 004 and system dark theme; CI pending.

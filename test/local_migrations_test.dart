@@ -18,8 +18,8 @@ void main() {
     await LocalMigrations.apply(db);
     await LocalMigrations.apply(db);
     expect(db.select('SELECT name FROM companies').single['name'], 'Existing');
-    expect(db.select('PRAGMA user_version').single.values.first, 3);
-    expect(db.select('SELECT version FROM schema_migrations').length, 3);
+    expect(db.select('PRAGMA user_version').single.values.first, 4);
+    expect(db.select('SELECT version FROM schema_migrations').length, 4);
   });
   test('failed upgrade rolls back DDL and keeps the old version', () async {
     await versionOne();
@@ -30,7 +30,7 @@ void main() {
   });
   test('rejects future schema and inconsistent history without changing data', () async {
     await versionOne();
-    db.execute('PRAGMA user_version=4');
+    db.execute('PRAGMA user_version=5');
     await expectLater(LocalMigrations.apply(db), throwsStateError);
     db.execute('PRAGMA user_version=1');
     db.execute('DELETE FROM schema_migrations');

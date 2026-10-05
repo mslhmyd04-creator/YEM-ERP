@@ -38,7 +38,7 @@ void main() {
     expect(db.select('SELECT password_hash FROM users').single['password_hash'], isNot(password));
     await expectLater(auth.bootstrap(companyName: 'other', branchName: 'b', username: 'x', password: password), throwsA(isA<AccessDenied>()));
     expect(db.select('SELECT count(*) AS n FROM companies').single['n'], 1);
-    expect(db.select('SELECT count(*) AS n FROM role_permissions').single['n'], 18);
+    expect(db.select('SELECT count(*) AS n FROM role_permissions').single['n'], 21);
   });
   test('lockout persists across service instances and expires', () async {
     for (var i = 0; i < 5; i++) {

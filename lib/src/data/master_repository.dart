@@ -21,7 +21,7 @@ class MasterRepository {
     final values = <Object?>[id, companyId, name];
     if (kind.hasPhone) { columns.add('phone'); values.add(phone); }
     if (kind == MasterKind.warehouse) { columns.add('branch_id'); values.add(branchId); }
-    if (kind.hasPhone) { columns.add('created_at'); values.add(DateTime.now().toUtc().toIso8601String()); }
+    if (kind.hasTimestamp) { columns.add('created_at'); values.add(DateTime.now().toUtc().toIso8601String()); }
     db.execute('INSERT INTO ${kind.table}(${columns.join(',')}) VALUES(${List.filled(columns.length, '?').join(',')})', values);
     return MasterRecord(id: id, name: name, phone: phone, branchId: branchId);
   }

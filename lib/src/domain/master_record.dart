@@ -1,4 +1,5 @@
 enum MasterKind {
+  branch('branches', 'الفروع'),
   category('product_categories', 'الفئات'),
   unit('units', 'الوحدات'),
   customer('customers', 'العملاء'),
@@ -8,6 +9,7 @@ enum MasterKind {
   const MasterKind(this.table, this.label);
   final String table;
   final String label;
+  bool get hasTimestamp => hasPhone || this == branch;
   bool get hasPhone => this == customer || this == supplier;
 }
 

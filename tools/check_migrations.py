@@ -127,10 +127,11 @@ class MasterPermissionsMigrationTest(unittest.TestCase):
             db.execute("INSERT INTO audit_logs(id,company_id,user_id,action,entity_type,entity_id,created_at) VALUES('setup','a','u','company.bootstrap','companies','a',?)", (NOW,))
             db.commit()
             db.executescript("BEGIN IMMEDIATE;\n" + (root / "003_master_permissions.sql").read_text() + "\nCOMMIT;")
-            self.assertEqual(db.execute("SELECT count(*) FROM role_permissions WHERE role_id='manager'").fetchone(), (15,))
+            db.executescript("BEGIN IMMEDIATE;\n" + (root / "004_branch_permissions.sql").read_text() + "\nCOMMIT;")
+            self.assertEqual(db.execute("SELECT count(*) FROM role_permissions WHERE role_id='manager'").fetchone(), (18,))
             self.assertEqual(db.execute("SELECT count(*) FROM role_permissions WHERE role_id='reader'").fetchone(), (0,))
             self.assertEqual(db.execute("SELECT password_hash FROM users").fetchone(), ("old-hash",))
-            self.assertEqual(db.execute("SELECT version FROM schema_migrations ORDER BY version").fetchall(), [(1,), (2,), (3,)])
+            self.assertEqual(db.execute("SELECT version FROM schema_migrations ORDER BY version").fetchall(), [(1,), (2,), (3,), (4,)])
             self.assertEqual(db.execute("PRAGMA foreign_key_check").fetchall(), [])
         finally:
             db.close()

@@ -17,7 +17,8 @@
 - [x] Add authorized Arabic setup/login/product UI and widget workflow tests.
 - [x] Verify company-scoped product repository create/list/archive tests in CI.
 - [x] Verify Windows SQLCipher tests and debug build in GitHub CI (36465256956).
-- [ ] Add categories, units, customers, suppliers, warehouses and authorized UI workflows.
+- [x] Add categories, units, customers, suppliers, warehouses and authorized UI workflows (run 37333836540).
+- [ ] Verify branch create/edit UI increment and migration 004.
 - [ ] Add expenses, basic custody, sales invoice, and PDF printing.
 - [ ] Pass phase 0 build, unit, and migration gates.
 

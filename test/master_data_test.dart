@@ -30,7 +30,7 @@ void main() {
   test('all master data is created and edited with stable identity and audit', () {
     for (final kind in MasterKind.values) {
       final record = app.masterData.save(kind, name: ' Initial ', phone: kind.hasPhone ? '123' : null,
-        branchId: kind == MasterKind.warehouse ? app.masterData.branches().single.id : null);
+        branchId: kind == MasterKind.warehouse ? app.masterData.branches().last.id : null);
       final edited = app.masterData.save(kind, id: record.id, name: 'Updated', phone: kind.hasPhone ? '456' : null,
         branchId: record.branchId);
       expect(edited.id, record.id);
@@ -85,7 +85,7 @@ void main() {
       await LocalMigrations.apply(old);
       await LocalMigrations.apply(old);
       expect(old.select("SELECT permission_code FROM role_permissions WHERE role_id='reader'"), isEmpty);
-      expect(old.select('SELECT count(*) AS n FROM role_permissions').single['n'], 18);
+      expect(old.select('SELECT count(*) AS n FROM role_permissions').single['n'], 21);
       expect(old.select('SELECT password_hash FROM users').single['password_hash'], 'test:$password');
     } finally { old.close(); }
   });
