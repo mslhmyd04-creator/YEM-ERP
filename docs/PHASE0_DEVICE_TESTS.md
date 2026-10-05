@@ -33,6 +33,6 @@ Record OS version, device model, artifact commit, time, result and any error. Do
 
 ## Automated evidence and limits
 
-CI covers encryption/file reopening, missing/wrong keys, migration upgrade/rollback, tenant references, Argon2 verification, persistent account lockout, permissions/session expiration and a setup/login/create/archive widget workflow. Device credential storage, installation and native desktop runtime behavior still require the checks above.
+Run 37342842602 verifies 44 Flutter tests and 13 SQL checks plus both builds. CI covers exact financial amounts, balanced/immutable posting, retry/conflicts and ledger rollback, alongside encryption/file reopening, missing/wrong keys, migration upgrade/rollback, tenant references, Argon2 verification, persistent account lockout, permissions/session expiration and a setup/login/create/archive widget workflow. Device credential storage, installation and native desktop runtime behavior still require the checks above.
 
 Master-data and branch flows have automated coverage. User/role administration is verified by automated security/widget tests in run 37340719874. Remaining Phase 0 work includes expense/custody, basic invoice and PDF. Offline/online variants, release identity/signing, backups and later ERPNext/integration phases are not complete.

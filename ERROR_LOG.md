@@ -26,3 +26,5 @@
 - 2026-10-05: Administration analyzer, scroll/focus and blocked second widget fixture issues RESOLVED in 37340719874; all 36 Flutter tests pass on both runners, analysis and both builds PASS. SQL checks PASS.
 
 - 2026-10-05 / run 37342448506: analysis and 43 Flutter tests passed; legacy administration upgrade fixture already contains finance permission definitions, so migration 006 INSERT raised permissions.code duplicate. Use INSERT OR IGNORE as in other permission migrations and retain pre-existing definitions in the migration regression fixture. Verification pending.
+
+- 2026-10-05: Duplicate financial permission migration error RESOLVED in 37342842602; all 44 Flutter tests, 13 SQL checks, analysis and both native builds PASS.

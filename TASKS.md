@@ -19,6 +19,7 @@
 - [x] Verify Windows SQLCipher tests and debug build in GitHub CI (36465256956).
 - [x] Add categories, units, customers, suppliers, warehouses and authorized UI workflows (run 37333836540).
 - [x] Verify branch create/edit, migration 004 and preserved user/warehouse references (37335012029).
+- [x] Add exact-money, balanced/immutable posting foundation with retry/conflict and SQL guards (37342842602).
 - [ ] Add expenses, basic custody, sales invoice, and PDF printing.
 - [ ] Pass phase 0 build, unit, and migration gates.
 
