@@ -102,7 +102,7 @@ void main() {
         final auth=LocalAuthService(old,TestHasher()); await auth.bootstrap(companyName: 'Legacy',branchName: 'Main',username: 'admin',password: password);
         final user=old.select('SELECT id,company_id FROM users').single;
         old.execute("DELETE FROM role_permissions WHERE permission_code LIKE 'finance.%'");
-        old.execute("DELETE FROM permissions WHERE code LIKE 'finance.%'");
+        // Permission definitions can already exist; migration must retain them.
         old.execute("UPDATE roles SET name='Renamed manager'");
         old.execute("INSERT INTO roles(id,company_id,name) VALUES('reader',?,'Reader')",[user['company_id']]);
         old.execute("INSERT INTO user_roles(user_id,role_id,company_id) VALUES(?,'reader',?)",[user['id'],user['company_id']]);

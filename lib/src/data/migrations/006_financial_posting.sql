@@ -67,7 +67,7 @@ CREATE TRIGGER journal_lines_update BEFORE UPDATE ON journal_entry_lines
 BEGIN SELECT RAISE(ABORT,'Journal lines are immutable'); END;
 CREATE TRIGGER journal_lines_delete BEFORE DELETE ON journal_entry_lines WHEN (SELECT posted FROM journal_entries WHERE id=OLD.entry_id)=1
 BEGIN SELECT RAISE(ABORT,'Posted lines are immutable'); END;
-INSERT INTO permissions(code,description) VALUES('finance.view','عرض السجل المالي'),('finance.post','ترحيل العمليات المالية');
+INSERT OR IGNORE INTO permissions(code,description) VALUES('finance.view','عرض السجل المالي'),('finance.post','ترحيل العمليات المالية');
 -- Original bootstrap manager may have been renamed. Do not grant reader roles.
 INSERT OR IGNORE INTO role_permissions(role_id,permission_code)
 SELECT DISTINCT ur.role_id,p.code FROM user_roles ur
