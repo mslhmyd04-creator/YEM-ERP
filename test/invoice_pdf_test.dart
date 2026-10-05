@@ -45,7 +45,7 @@ void main(){
   test('fifty long Arabic rows paginate and emit visual QA fixture',()async{
     final sample=SalesInvoice(id:newUuid(),number:'SI-00000050',date:'2026-10-05',companyName:'مؤسسة يمن للتجارة والخدمات',branchName:'الفرع الرئيسي - صنعاء',customerName:'شركة الأمل للتجارة',description:'فاتورة اختبار بصري لسلامة الخط العربي والأرقام وتكرار عناوين الجدول عبر الصفحات.',totalMinor:6252500,isCash:false,items:List.generate(50,(i)=>InvoiceItem(productId:'p-$i',name:'خدمة صيانة وتجهيز الأجهزة والمعدات للمؤسسات - البند ${i+1}',sku:'SERVICE-${(i+1).toString().padLeft(3,'0')}',unitName:'وحدة',quantity:1,unitPriceMinor:125050,totalMinor:125050,costMinor:0,isStockItem:false)));
     final bytes=await InvoicePdfRenderer().render(sample);final text=latin1.decode(bytes);
-    expect(RegExp(r'/Type /Page\b').allMatches(text).length,greaterThan(1));
+    expect(RegExp(r'/Type\s*/Page\b').allMatches(text).length,greaterThan(1));
     final directory=Directory('build/test-output');await directory.create(recursive:true);await File('${directory.path}/invoice-arabic-qa.pdf').writeAsBytes(bytes);
   });
 }
