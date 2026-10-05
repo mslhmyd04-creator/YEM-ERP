@@ -12,3 +12,5 @@
 - 2026-09-30: Both authentication diagnostics and UI parenthesis errors RESOLVED; run 36752011534 analysis, tests, Android/Windows debug builds and uploads PASS.
 
 - 2026-10-05 / Phase 0: no application analysis/test/build failures in master and branch increments. Git metadata /git/commits read returned transient internal error; /commits read provided the tree successfully (RESOLVED). Native verification PASS in 37335012029; local SDK remains unavailable.
+
+- 2026-10-05 / Phase 0 / run 37337178600: analyzer unawaited_return_in_try_block on generic synchronous transaction in async user save. Specify transaction result as String so it cannot infer a Future result. CI recheck pending.

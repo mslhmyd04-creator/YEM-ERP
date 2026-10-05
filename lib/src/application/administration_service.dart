@@ -23,7 +23,7 @@ class AdministrationService {
     }
     final create = id == null;
     final recordId = id ?? newUuid();
-    return _transaction(session, () {
+    return _transaction<String>(session, () {
       if (!create && !repository.owns('roles', recordId, session.companyId)) { throw const AccessDenied('الدور غير متاح لهذه المؤسسة.'); }
       repository.saveRole(session.companyId, recordId, label, permissions, create: create);
       _protectAdministrator(session.companyId);
@@ -51,7 +51,7 @@ class AdministrationService {
       final session = auth.requirePermission(permission); // Revalidate after asynchronous hashing.
       if (session.userId != original.userId || session.companyId != original.companyId) { throw const AccessDenied('تغيرت جلسة الدخول. أعد المحاولة.'); }
       final recordId = id ?? newUuid();
-      return _transaction(session, () {
+      return _transaction<String>(session, () {
         if ((!create && !repository.owns('users', recordId, session.companyId)) ||
             !repository.owns('branches', branchId, session.companyId) ||
             !assignedRoles.every((role) => repository.owns('roles', role, session.companyId))) {

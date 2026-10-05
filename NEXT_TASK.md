@@ -12,3 +12,5 @@
 - DO NOT REDO: scaffold, encryption/auth and completed master-data flows. Do not advance Phase 1 before Phase 0 passes build/unit/migration gates. Never claim all ERP phases or device validation complete.
 
 - Current checkpoint: inspect administration CI, resolve any errors before continuing financial Phase 0 workflows. Prior master/branch increment remains verified.
+
+- Recheck administration CI after explicit synchronous transaction result type; run 37337178600 stopped on analyzer warning.
