@@ -40,6 +40,15 @@ void main() {
         ['${kind.table}.create', '${kind.table}.update']);
     }
   });
+  test('renaming a branch preserves existing user and warehouse references', () {
+    final branch = app.masterData.branches().single;
+    final warehouse = app.masterData.save(MasterKind.warehouse, name: 'Existing warehouse', branchId: branch.id);
+    app.masterData.save(MasterKind.branch, id: branch.id, name: 'Renamed branch');
+    expect(db.select('SELECT branch_id FROM users WHERE company_id=?', [company]).single['branch_id'], branch.id);
+    expect(app.masterData.list(MasterKind.warehouse).single.branchId, branch.id);
+    expect(app.masterData.list(MasterKind.warehouse).single.id, warehouse.id);
+    expect(app.masterData.branches().single.name, 'Renamed branch');
+  });
   test('foreign company branches, records and categories are rejected', () {
     expect(() => app.masterData.save(MasterKind.warehouse, name: 'Cross', branchId: 'bb'), throwsA(isA<SqliteException>()));
     db.execute("INSERT INTO customers(id,company_id,name,created_at) VALUES('foreign','b','Private','date')");

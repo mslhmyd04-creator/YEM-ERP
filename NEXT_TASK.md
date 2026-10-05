@@ -17,3 +17,5 @@
 Inspect CI for master-data increment. Migration 003 and tenant/permission/audit/form tests added; Flutter verification PENDING. After PASS, continue Phase 0 user/role/branch administration, then basic financial workflows. Never advance Phase 1 before Phase 0 gate.
 
 - Master data PASS in 37333836540. Current task: verify branch create/edit and migration 004 CI. Then user/role administration and financial Phase 0 workflows.
+
+- Branch verification includes explicit user/warehouse reference preservation regression.
