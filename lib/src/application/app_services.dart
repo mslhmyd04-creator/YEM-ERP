@@ -5,6 +5,8 @@ import '../data/master_repository.dart';
 import 'master_data_service.dart';
 import 'administration_service.dart';
 import 'posting_engine.dart';
+import 'financial_service.dart';
+import '../data/financial_repository.dart';
 import '../data/journal_repository.dart';
 import '../data/administration_repository.dart';
 import '../infrastructure/argon2_password_hasher.dart';
@@ -24,12 +26,14 @@ class AppServices {
     masterData = MasterDataService(auth, MasterRepository(auth.db));
     administration = AdministrationService(auth, AdministrationRepository(auth.db));
     posting = PostingEngine(auth, JournalRepository(auth.db));
+    finance = FinancialService(auth, posting, FinancialRepository(auth.db));
   }
   final LocalAuthService auth;
   late final ProductService products;
   late final MasterDataService masterData;
   late final AdministrationService administration;
   late final PostingEngine posting;
+  late final FinancialService finance;
   final void Function()? _close;
 
   static Future<AppServices> open() async {

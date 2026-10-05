@@ -4,6 +4,7 @@ import '../application/app_services.dart';
 import '../application/local_auth_service.dart';
 import 'master_data_page.dart';
 import 'administration_page.dart';
+import 'finance_page.dart';
 import '../domain/master_record.dart';
 
 class YemErpApp extends StatelessWidget {
@@ -169,6 +170,8 @@ class _WorkspaceState extends State<_Workspace> {
       OutlinedButton(onPressed: busy ? null : () => _navigate(MasterDataPage(services: app)), child: const Text('البيانات الأساسية')),
     if (app.auth.hasPermission('administration.manage'))
       OutlinedButton(onPressed: busy ? null : () => _navigate(AdministrationPage(services: app)), child: const Text('المستخدمون والأدوار')),
+    if (app.auth.hasPermission('finance.view'))
+      OutlinedButton(onPressed: busy ? null : () => _navigate(FinancePage(services: app)), child: const Text('المصروفات والعهد')),
     TextButton(onPressed: busy ? null : () => _perform(() async {
       app.auth.logout();
       setState(() { signedIn = false; name.clear(); sku.clear(); });

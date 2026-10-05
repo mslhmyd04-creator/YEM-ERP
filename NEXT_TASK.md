@@ -10,3 +10,5 @@
 - NEXT COMMAND: python -m unittest discover -s tools -p 'check_*.py' -v; run analysis/tests and Android/Windows builds in GitHub Actions after implementation.
 - EXPECTED RESULT: atomic business/ledger rollback, exact balances, authorization/tenant references, duplicate conflict/retry and UI tests pass with both builds.
 - DO NOT REDO: verified scaffold, encryption/auth, master data, administration or posting foundation. Stay in Phase 0; Phases 1–9 and signed releases/device acceptance remain pending.
+
+- Current checkpoint: inspect expense/custody CI. Migration 007, business composition callbacks, FinancialService/Repository and Arabic FinancePage plus service/UI/upgrade tests are implemented; SQL checks pass locally. Do not add invoice/PDF until these checks/builds pass.

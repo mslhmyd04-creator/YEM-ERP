@@ -16,3 +16,5 @@
 - Next Task: compose expense/basic custody documents with the verified posting engine. Business documents, custody movements, audit and journal must commit together; retries must compare the complete business payload.
 - Exact Next Command: flutter pub get && flutter analyze && flutter test && flutter build apk --debug. On Windows also flutter build windows --debug.
 - Device Status: secure credential backend, installation and actual layout checks NOT VERIFIED; follow docs/PHASE0_DEVICE_TESTS.md.
+
+- Migration 007 and basic expense/custody services/forms implemented; document/journal/ledger/audit save atomically with complete-payload retry checks. Native verification PENDING CI.

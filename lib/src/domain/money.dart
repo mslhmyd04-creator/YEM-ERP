@@ -22,3 +22,8 @@ class Money {
   @override
   String toString() => '${minor ~/ 100}.${(minor % 100).toString().padLeft(2, '0')}';
 }
+
+String formatLedgerBalance(BigInt minor) {
+  final absolute = minor.abs();
+  return '${minor.isNegative ? '-' : ''}${absolute ~/ BigInt.from(100)}.${(absolute % BigInt.from(100)).toString().padLeft(2, '0')}';
+}

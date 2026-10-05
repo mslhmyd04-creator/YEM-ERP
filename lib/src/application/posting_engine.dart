@@ -31,15 +31,14 @@ class PostingEngine {
       return id;
     });
   }
-  String post(PostingRequest request) {
+  String post(PostingRequest request, {String? businessPayload, void Function()? prepare, void Function(String entryId)? persist}) {
     final session = auth.requirePermission('finance.post');
     final lines = _validate(request);
     final canonical = jsonEncode([request.reference.name,request.referenceId,request.branchId,request.date,request.description.trim(),
-      lines.map((l)=>[l.accountId,l.debit.minor,l.credit.minor]).toList()]);
+      lines.map((l)=>[l.accountId,l.debit.minor,l.credit.minor]).toList(), if (businessPayload != null) businessPayload]);
     return _transaction(() {
       auth.requirePermission('finance.post');
-      if (repository.currency(session.companyId)!='YER' || !repository.ownsBranch(session.companyId,request.branchId) ||
-        !lines.every((l)=>repository.ownsAccount(session.companyId,l.accountId))) {
+      if (repository.currency(session.companyId)!='YER' || !repository.ownsBranch(session.companyId,request.branchId)) {
         throw const AccessDenied('الفرع أو الحساب أو العملة غير متاحة لهذه المؤسسة.');
       }
       final prior = repository.existing(session.companyId,request.reference,request.referenceId);
@@ -47,8 +46,11 @@ class PostingEngine {
         if (prior['posted']!=1 || prior['canonical_request']!=canonical) { throw const AccessDenied('يتعارض الطلب مع قيد سابق. لا يمكن تغيير مستند مرحّل.'); }
         return prior['id'] as String;
       }
+      prepare?.call(); // Synchronous business validation/preparation under the same lock.
+      if (!lines.every((l)=>repository.ownsAccount(session.companyId,l.accountId))) { throw const AccessDenied('الحساب غير متاح لهذه المؤسسة.'); }
       final id = newUuid();
       repository.insert(session.companyId,session.userId,id,repository.nextNumber(session.companyId),request,canonical,lines);
+      persist?.call(id); // A failure rolls back business document, journal and sequence.
       auth.audit(companyId: session.companyId,userId: session.userId,action: 'journal.post',entity: 'journal_entries',recordId: id);
       return id;
     });

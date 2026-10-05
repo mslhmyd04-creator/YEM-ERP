@@ -109,7 +109,7 @@ void main() {
         await LocalMigrations.apply(old); await LocalMigrations.apply(old);
         expect(old.select("SELECT 1 FROM role_permissions WHERE permission_code LIKE 'finance.%'"),hasLength(2));
         expect(old.select("SELECT 1 FROM role_permissions WHERE role_id='reader'"),isEmpty);
-        expect(old.select('PRAGMA user_version').single.values.first,6);
+        expect(old.select('PRAGMA user_version').single.values.first,7);
         expect(old.select('SELECT password_hash FROM users').single['password_hash'],'test:$password');
       } finally {old.close();}
     });

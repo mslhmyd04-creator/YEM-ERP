@@ -30,7 +30,7 @@ void main() {
 
   test('database is encrypted, migrates once and reopens', () async {
     final first = await EncryptedLocalDatabase.open(path: path, keyStore: keys);
-    expect(first.connection.select('PRAGMA user_version').first.values.first, 6);
+    expect(first.connection.select('PRAGMA user_version').first.values.first, 7);
     first.connection.execute(
       'INSERT INTO companies(id,name,created_at) VALUES(?,?,?)',
       ['company-1', 'مؤسسة', '2026-09-28T00:00:00Z'],
@@ -42,7 +42,7 @@ void main() {
 
     final reopened = await EncryptedLocalDatabase.open(path: path, keyStore: keys);
     expect(reopened.connection.select('SELECT name FROM companies').single['name'], 'مؤسسة');
-    expect(reopened.connection.select('SELECT count(*) AS n FROM schema_migrations').single['n'], 6);
+    expect(reopened.connection.select('SELECT count(*) AS n FROM schema_migrations').single['n'], 7);
     reopened.close();
   });
 

@@ -15,11 +15,11 @@ class JournalRepository {
     final rows = db.select('SELECT id,canonical_request,posted FROM journal_entries WHERE company_id=? AND reference_type=? AND reference_id=?', [company,type.name,reference]);
     return rows.isEmpty ? null : rows.single;
   }
-  String nextNumber(String company) {
-    db.execute("INSERT OR IGNORE INTO document_sequences(company_id,kind,next_value) VALUES(?,'journal',1)", [company]);
-    final next = db.select("SELECT next_value FROM document_sequences WHERE company_id=? AND kind='journal'", [company]).single['next_value'] as int;
-    db.execute("UPDATE document_sequences SET next_value=next_value+1 WHERE company_id=? AND kind='journal'", [company]);
-    return 'JE-${next.toString().padLeft(8,'0')}';
+  String nextNumber(String company, {String kind = 'journal', String prefix = 'JE'}) {
+    db.execute("INSERT OR IGNORE INTO document_sequences(company_id,kind,next_value) VALUES(?,?,1)", [company,kind]);
+    final next = db.select("SELECT next_value FROM document_sequences WHERE company_id=? AND kind=?", [company,kind]).single['next_value'] as int;
+    db.execute("UPDATE document_sequences SET next_value=next_value+1 WHERE company_id=? AND kind=?", [company,kind]);
+    return '$prefix-${next.toString().padLeft(8,'0')}';
   }
   void insert(String company, String user, String id, String number, PostingRequest request, String canonical, List<JournalLine> lines) {
     db.execute("INSERT INTO journal_entries(id,company_id,branch_id,document_number,reference_type,reference_id,document_date,description,currency_code,canonical_request,created_by,created_at) VALUES(?,?,?,?,?,?,?,?,'YER',?,?,?)",

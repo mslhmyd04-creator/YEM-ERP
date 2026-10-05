@@ -28,3 +28,5 @@
 - 2026-10-05 / run 37342448506: analysis and 43 Flutter tests passed; legacy administration upgrade fixture already contains finance permission definitions, so migration 006 INSERT raised permissions.code duplicate. Use INSERT OR IGNORE as in other permission migrations and retain pre-existing definitions in the migration regression fixture. Verification pending.
 
 - 2026-10-05: Duplicate financial permission migration error RESOLVED in 37342842602; all 44 Flutter tests, 13 SQL checks, analysis and both native builds PASS.
+
+- 2026-10-05 / Phase 0 / local SQL checks: migration 007 initially placed table CHECK before later columns, causing SQLite syntax error near journal_entry_id. Move table constraints after all column definitions. RESOLVED in local SQL checks; native recheck pending.
