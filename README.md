@@ -23,4 +23,4 @@ The SQLCipher-backed local database is isolated in `lib/src/infrastructure/local
 
 ## Development test packages
 
-Verified increment: [GitHub Actions run 36752011534](https://github.com/mslhmyd04-creator/YEM-ERP/actions/runs/36752011534), code commit `337817009d57dc2046a3c9746cd61dd8f0e5172f`. Artifacts `yem-erp-android-debug` and `yem-erp-windows-debug` are retained for 14 days. Follow [device acceptance](docs/PHASE0_DEVICE_TESTS.md); physical-device results are not verified.
+Verified increment: [GitHub Actions run 37335012029](https://github.com/mslhmyd04-creator/YEM-ERP/actions/runs/37335012029), code commit `84d3089a445f4a43b9d7c621a6c11bb9d7de7593`. Artifacts `yem-erp-android-debug` and `yem-erp-windows-debug` are retained for 14 days. Follow [device acceptance](docs/PHASE0_DEVICE_TESTS.md); physical-device results are not verified.

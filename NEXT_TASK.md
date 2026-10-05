@@ -1,21 +1,12 @@
 # Resume here
 
 - CURRENT PHASE: 0 — incomplete
-- COMPLETED: encrypted local storage, migrations 001/002, local auth/RBAC, setup/login and authorized product create/list/archive UI with atomic audit.
-- VERIFIED: run 36465256956 baseline Android/Windows builds. Run 36752011534: 9 SQL checks, analysis, 18 Flutter tests on Ubuntu/Windows, debug builds and package uploads PASS. Tested code commit: 337817009d57dc2046a3c9746cd61dd8f0e5172f.
-- CURRENT CI: https://github.com/mslhmyd04-creator/YEM-ERP/actions/runs/36752011534
-- NOT VERIFIED: device secure storage, installation, device migration and keyboard/window layout acceptance.
-- EXACT ERROR: none in current analysis/tests. Local Flutter/Dart absent. Prior CI diagnostics corrected.
-- NEXT ACTION: continue customer/warehouse/categories/units/supplier application services and authorized UI with company-scoped tests.
-- LOCAL COMMAND IF SDK AVAILABLE: flutter pub get; flutter analyze; flutter test; flutter build apk --debug. On Windows also flutter build windows --debug.
-- DEVICE PROCEDURE: docs/PHASE0_DEVICE_TESTS.md. Use development data only.
-- EXPECTED RESULT: successful Android and Windows jobs and downloadable debug artifacts; record commit/run/device results before phase gate.
-- DO NOT REDO: scaffold/platform runners/specifications/auth increment. Preserve tenant boundaries and architecture. Do not claim all ERP phases complete or merge unfinished Phase 0 as a release.
-
-## Current checkpoint: 2026-10-05
-
-Inspect CI for master-data increment. Migration 003 and tenant/permission/audit/form tests added; Flutter verification PENDING. After PASS, continue Phase 0 user/role/branch administration, then basic financial workflows. Never advance Phase 1 before Phase 0 gate.
-
-- Master data PASS in 37333836540. Current task: verify branch create/edit and migration 004 CI. Then user/role administration and financial Phase 0 workflows.
-
-- Branch verification includes explicit user/warehouse reference preservation regression.
+- WHAT WAS COMPLETED: branches, categories, units, customers, suppliers and warehouses have audited create/edit/list services and connected Arabic forms; products select categories/units. Schema version 4, existing IDs preserved, granular master permissions.
+- WHAT IS WORKING: master data PASS in run 37333836540 (24 Flutter tests on both runners, 10 SQL checks, analysis and both debug builds). Final branch increment PASS in run 37335012029: analysis, 25 Flutter tests on Ubuntu/Windows, 10 SQL checks, Android/Windows builds and debug package uploads. Tested code SHA 84d3089a445f4a43b9d7c621a6c11bb9d7de7593.
+- WHAT IS NOT WORKING: user/role administration UI and remaining financial/PDF workflows not implemented; device acceptance NOT VERIFIED.
+- EXACT ERROR IF ANY: none in current analysis/tests. Local Flutter/Dart unavailable.
+- FILES MODIFIED: see GitHub commits 0a434758d7370e145767f06c3ca39dc3e67f2f79, 82579cca04c341a1c625e18ab95afc720134f195, 84d3089a445f4a43b9d7c621a6c11bb9d7de7593.
+- NEXT TASK: implement company-scoped user/role administration with tests. Prevent disabling/removing the last active administrator and invalidate prior sessions after password reset. Continue expenses/basic custody/invoice/PDF after administration passes.
+- NEXT COMMAND: flutter pub get && flutter analyze && flutter test && flutter build apk --debug. On Windows also flutter build windows --debug.
+- EXPECTED RESULT: user/role administration must pass tenant, last-administrator, credential/session and UI tests plus both native builds. Preserve the verified baseline.
+- DO NOT REDO: scaffold, encryption/auth and completed master-data flows. Do not advance Phase 1 before Phase 0 passes build/unit/migration gates. Never claim all ERP phases or device validation complete.

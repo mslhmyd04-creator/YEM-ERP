@@ -26,3 +26,5 @@
 - 2026-10-05: Verified master data in run 37333836540. Add branch create/edit with stable references, migration 004 and system dark theme; CI pending.
 
 - Add regression test that branch renaming preserves existing user and warehouse references.
+
+- 2026-10-05: Final branch/master increment verified in run 37335012029: 10 SQL checks, analysis, 25 Flutter tests on Ubuntu/Windows, both builds and debug package uploads PASS. Physical-device acceptance still NOT VERIFIED.
