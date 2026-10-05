@@ -44,7 +44,7 @@ jobs:
       - name: Analyze sources
         run: flutter analyze
       - name: Run Flutter unit tests
-        run: flutter test
+        run: flutter test --reporter expanded --timeout 2m
       - name: Build Android debug app
         run: flutter build apk --debug
       - name: Upload Android development package
@@ -68,7 +68,7 @@ jobs:
       - name: Resolve dependencies
         run: flutter pub get
       - name: Test encrypted storage on Windows runner
-        run: flutter test
+        run: flutter test --reporter expanded --timeout 2m
       - name: Build Windows debug app
         run: flutter build windows --debug
       - name: Upload Windows development package
