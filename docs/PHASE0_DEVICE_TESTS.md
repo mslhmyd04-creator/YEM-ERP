@@ -24,6 +24,9 @@ Open the latest successful Phase 0 checks run in GitHub Actions. Download `yem-e
 | Administration | Create a role with customers.view only; create a user assigned to that role; log in as that user | Master data is accessible; customer creation and administration are denied | NOT VERIFIED |
 | Last administrator | Attempt to disable the sole administrator or remove administration.manage from the sole manager role | Operation denied; administrator remains active and can manage users | NOT VERIFIED |
 | Password reset | Create a second administrator, reset a test user password, attempt old/new login | Old password rejected; new password accepted; old session invalidated | NOT VERIFIED |
+| Financial setup | Open المصروفات والعهد; configure defaults and post cash opening 1000 YER | Cash ledger balance is 1000.00; configuration can be repeated without duplicates | NOT VERIFIED |
+| Basic custody | Issue 300 YER to a test employee, spend 50 YER from that custody | Cash remains 700.00; custody remainder is 250.00; documents remain after restart | NOT VERIFIED |
+| Insufficient funds | Attempt to spend more than remaining cash/custody | Denied with no extra document or ledger movement | NOT VERIFIED |
 | Logout | Logout and attempt to use catalog | Login required | NOT VERIFIED |
 | Session expiry | Remain logged in for 30 minutes, then perform an operation | Operation denied and login offered | NOT VERIFIED |
 | Secure-storage failure | In an isolated test installation, remove stored database credential while retaining its encrypted file | Startup fails closed; retry offered; no replacement database or setup | NOT VERIFIED |
@@ -33,6 +36,6 @@ Record OS version, device model, artifact commit, time, result and any error. Do
 
 ## Automated evidence and limits
 
-Run 37342842602 verifies 44 Flutter tests and 13 SQL checks plus both builds. CI covers exact financial amounts, balanced/immutable posting, retry/conflicts and ledger rollback, alongside encryption/file reopening, missing/wrong keys, migration upgrade/rollback, tenant references, Argon2 verification, persistent account lockout, permissions/session expiration and a setup/login/create/archive widget workflow. Device credential storage, installation and native desktop runtime behavior still require the checks above.
+Run 37345926353 verifies 53 Flutter tests and 15 SQL checks plus both builds. CI covers exact financial amounts, balanced/immutable posting, retry/conflicts and ledger rollback, alongside encryption/file reopening, missing/wrong keys, migration upgrade/rollback, tenant references, Argon2 verification, persistent account lockout, permissions/session expiration and a setup/login/create/archive widget workflow. Device credential storage, installation and native desktop runtime behavior still require the checks above.
 
-Master-data and branch flows have automated coverage. User/role administration is verified by automated security/widget tests in run 37340719874. Remaining Phase 0 work includes expense/custody, basic invoice and PDF. Offline/online variants, release identity/signing, backups and later ERPNext/integration phases are not complete.
+Master-data and branch flows have automated coverage. User/role administration is verified by automated security/widget tests in run 37340719874. Basic cash/custody expenses and custody issue have automated coverage. Remaining Phase 0 work includes a stock-backed basic invoice and PDF. Offline/online variants, release identity/signing, backups and later ERPNext/integration phases are not complete.

@@ -1,6 +1,6 @@
 # Phase 0 financial boundary
 
-The current increment is ledger infrastructure for the remaining Phase 0 workflows. Basic cash/custody expenses and custody issue forms are now implemented; their native verification is pending. Sales invoices, approvals, transfers/settlements, stock valuation, fiscal periods and PDF printing remain pending. It is not the full Phase 4 accounting module.
+The current increment is ledger infrastructure for the remaining Phase 0 workflows. Basic cash/custody expenses and custody issue forms are now implemented; their native verification passed in run 37345926353 (53 Flutter tests per runner, 15 SQL checks and both builds). Sales invoices, approvals, transfers/settlements, stock valuation, fiscal periods and PDF printing remain pending. It is not the full Phase 4 accounting module.
 
 - Phase 0 supports the existing company currency YER and two decimal places. Other currencies are rejected explicitly until conversion/rate and precision policies exist. Entered decimals become exact integer minor units; floating point is not used. Posting totals cannot exceed 9,000,000,000,000,000 minor units.
 - Account configuration requires administration.manage. Ledger reads require finance.view; posting requires finance.post. Migration 006 upgrades only manager roles attached to the original bootstrap user that still hold administration.manage, using the bootstrap audit rather than an editable role name. A manager can explicitly assign the new permissions to additional roles.

@@ -30,3 +30,5 @@
 - 2026-10-05: Duplicate financial permission migration error RESOLVED in 37342842602; all 44 Flutter tests, 13 SQL checks, analysis and both native builds PASS.
 
 - 2026-10-05 / Phase 0 / local SQL checks: migration 007 initially placed table CHECK before later columns, causing SQLite syntax error near journal_entry_id. Move table constraints after all column definitions. RESOLVED in local SQL checks; native recheck pending.
+
+- 2026-10-05: Migration 007 column/constraint ordering RESOLVED; run 37345926353 passes analysis, 53 Flutter tests per runner, 15 SQL checks and both native builds.

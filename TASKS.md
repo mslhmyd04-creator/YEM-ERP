@@ -20,7 +20,8 @@
 - [x] Add categories, units, customers, suppliers, warehouses and authorized UI workflows (run 37333836540).
 - [x] Verify branch create/edit, migration 004 and preserved user/warehouse references (37335012029).
 - [x] Add exact-money, balanced/immutable posting foundation with retry/conflict and SQL guards (37342842602).
-- [ ] Add expenses, basic custody, sales invoice, and PDF printing.
+- [x] Add basic cash opening, custody issue and cash/custody expense forms; atomic document/journal/ledger tests and builds pass (37345926353).
+- [ ] Add basic stock-backed sales invoice and PDF printing.
 - [ ] Pass phase 0 build, unit, and migration gates.
 
 Phases 1–9 remain blocked until phase 0 passes its gate.

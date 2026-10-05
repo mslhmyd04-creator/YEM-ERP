@@ -40,3 +40,5 @@
 - 2026-10-05: Financial foundation verified in run 37342842602: analysis, 44 Flutter tests on each runner, 13 SQL checks, Android/Windows builds and debug artifact uploads PASS. Expense/custody/invoice/PDF business workflows remain pending.
 
 - 2026-10-05: Add basic cash funding, custody issue, cash/custody expenses and Arabic forms. Migration 007 verifies document/journal links and immutable custody movements; business writes share the posting transaction, retries compare full category/owner/source payload and insufficient funds are rejected. Native verification PENDING CI.
+
+- 2026-10-05: Basic expense/custody increment verified in 37345926353: analysis, 53 Flutter tests per runner, 15 SQL checks, both builds and debug uploads PASS. Basic invoice/PDF and physical-device acceptance remain pending.
