@@ -40,3 +40,5 @@
 - 2026-10-05: All PDF diagnostics/assertion/layout issues RESOLVED in 37352094707. Container alone still allowed a summary page break; explicit Inseparable keeps total/description/note together. Final generated artifact rendered/inspected across all seven pages; 68 native tests per runner, 17 SQL checks, analysis and both builds PASS. No supplied server target/execution route: Phase 1 deployment NOT VERIFIED.
 
 - 2026-10-06: Development host blocker narrowed: a disposable Actions server can validate the app without a permanent user host. Four pure tests PASS. ERPNext container execution unavailable locally (Docker absent); installed checks PENDING CI, not claimed verified.
+
+- First Phase 1 run 37537059839: ERPNext/custom app install and migrate PASS; fixture setup failed on missing Warehouse Type Transit before test execution. Fix uses ERPNext's own install_fixtures.install(country='Yemen') before companies; revalidation PENDING. Also add native REST permission hooks and HTTP/concurrency tests.

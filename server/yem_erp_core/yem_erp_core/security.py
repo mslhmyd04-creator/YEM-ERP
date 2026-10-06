@@ -16,3 +16,27 @@ def require_company(company, *, manage=False):
     ):
         frappe.throw("Company access not granted", frappe.PermissionError)
     return document
+
+
+def mapping_has_permission(doc, user=None, permission_type=None):
+    user = user or frappe.session.user
+    if user == "Administrator":
+        return None
+    if user == "Guest" or not frappe.db.exists(
+        "User Permission", {"user": user, "allow": "Company", "for_value": doc.company}
+    ):
+        return False
+    # None preserves Frappe's ordinary role/document permission checks.
+    return None
+
+
+def mapping_query_conditions(user=None):
+    user = user or frappe.session.user
+    if user == "Administrator":
+        return ""
+    companies = frappe.get_all("User Permission", filters={"user": user, "allow": "Company"},
+                               pluck="for_value")
+    if user == "Guest" or not companies:
+        return "1=0"
+    names = ",".join(frappe.db.escape(company) for company in companies)
+    return f"`tabYEM Entity Mapping`.`company` IN ({names})"

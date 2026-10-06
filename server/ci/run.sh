@@ -13,3 +13,9 @@ bench --site yem-ci.localhost install-app yem_erp_core
 bench --site yem-ci.localhost migrate
 bench --site yem-ci.localhost list-apps
 bench --site yem-ci.localhost execute yem_erp_core.integration_tests.run
+bench --site yem-ci.localhost execute yem_erp_core.http_fixtures.setup
+env/bin/gunicorn --chdir sites --bind 127.0.0.1:8000 --workers 2 --threads 2 \
+  frappe.app:application > /tmp/yem-http-server.log 2>&1 &
+http_pid=$!
+trap 'kill "$http_pid" 2>/dev/null || true; rm -f /tmp/yem-ci-http.json' EXIT
+env/bin/python -m yem_erp_core.http_tests

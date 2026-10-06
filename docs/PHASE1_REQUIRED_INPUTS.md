@@ -1,16 +1,22 @@
-# Phase 1 target intake
+# Phase 1 deployment targets
 
-Phase 0 software gate PASS (PHASE0_GATE.md). Actual ERPNext/Frappe deployment and integration cannot be verified through repository access alone.
+## Development target selected
 
-| Required input | Purpose |
-| --- | --- |
-| Existing ERPNext URL/version or a new empty test host | Choose compatible branches without altering an unknown site |
-| Test hostname/IP and OS | Identify isolated deployment environment |
-| Authorized execution route (SSH/deployment platform) | Install/run server and integration tests |
-| Intended LAN-only or online endpoint | Configure endpoint and HTTPS where applicable |
+GitHub Actions runs a disposable Docker site `yem-ci.localhost` using the official
+ERPNext v16.50.0 image, MariaDB 11.8 and Redis 6.2. This permits installation,
+migration and real integration tests without requesting a permanent host first.
+No public port or user data is used. The job generates random temporary secrets
+and removes its own containers/volumes at completion. See server/README.md.
 
-Supply identifiers/access method and provision secrets through an approved execution environment, never source control. No server target or callable server execution environment is currently supplied.
+## Persistent deployment still needs inputs
 
-Next workflow: inspect/isolate target; install/verify compatible Frappe and ERPNext; create yem_erp_core without core edits; explicit UUID mappings for accounts/counterparties/items/warehouses/documents; authenticated company-scoped/idempotent/audited APIs; integration/permission/duplicate/rollback tests. Pass Phase 1 gate before synchronization.
+- Existing ERPNext URL/version, or an empty host and OS.
+- Authorized execution route and private secret provisioning.
+- LAN or online endpoint; HTTPS is required for online deployment.
 
-Physical Android/Windows installation, native credentials and print tests remain separate acceptance evidence. Do not mark deployment complete or skip later gates by assuming a server exists.
+Do not assume the CI version can upgrade an existing site. No existing server is
+modified. A successful disposable run does not prove permanent deployment,
+Android/Windows runtime behavior, signing or physical printing.
+
+Complete the Phase 1 APIs/integration gate before starting Phase 2. Final
+production release still requires a persistent target and device acceptance.

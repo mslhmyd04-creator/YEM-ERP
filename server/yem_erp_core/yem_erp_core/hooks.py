@@ -5,3 +5,9 @@ app_description = "Company-scoped integration API"
 app_email = "development@example.invalid"
 app_license = "MIT"
 required_apps = ["erpnext"]
+permission_query_conditions = {
+    "YEM Entity Mapping": "yem_erp_core.security.mapping_query_conditions"
+}
+has_permission = {
+    "YEM Entity Mapping": "yem_erp_core.security.mapping_has_permission"
+}

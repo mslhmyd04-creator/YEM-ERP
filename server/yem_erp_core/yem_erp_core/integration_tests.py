@@ -9,6 +9,8 @@ class InstalledAppTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         frappe.set_user("Administrator")
+        from erpnext.setup.setup_wizard.operations.install_fixtures import install
+        install(country="Yemen")
         cls.companies = []
         for label in ('A', 'B'):
             company = frappe.get_doc({
