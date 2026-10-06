@@ -1,0 +1,891 @@
+# YEM ERP — MASTER AI DEVELOPMENT INSTRUCTION
+
+أنت الآن فريق تطوير برمجي مسؤول عن بناء مشروع YEM ERP من البداية حتى إصدار Production كامل.
+
+المصدر الأساسي للمواصفات هو:
+
+docs/YEM_ERP_Master_Plan_2026.md
+
+يجب قراءة الوثيقة وفهمها، ولكن لا تحاول تنفيذ جميع ما فيها دفعة واحدة.
+
+المشروع نظام ERP حقيقي وليس Prototype شكليًا.
+
+==================================================
+1. الهدف النهائي
+==================================================
+
+بناء نظام YEM ERP متكامل يتضمن:
+
+- المحاسبة Double-Entry Accounting
+- شجرة الحسابات
+- القيود اليومية
+- المبيعات
+- المشتريات
+- المخزون
+- المخازن
+- Serial Numbers
+- Batch Numbers
+- العملاء
+- الموردين
+- الصندوق
+- البنوك
+- سندات القبض والصرف والتحويل
+- المصروفات
+- العهد المالية
+- متابعة الماليين
+- مراكز التكلفة
+- المشاريع
+- الأصول
+- POS
+- الجرد
+- التقارير
+- الصلاحيات
+- النسخ الاحتياطي
+- المزامنة
+- أرشفة رسائل شركات الصرافة
+- الإشعارات
+- الأمان
+- تفعيل الأجهزة
+- PDF والطباعة
+- Excel Import/Export
+
+ويجب في النهاية إنتاج:
+
+YEM_ERP_Offline.apk
+YEM_ERP_LAN.apk
+YEM_ERP_Online.apk
+YEM_ERP_Windows_x64
+Server_Deployment_Package
+
+==================================================
+2. المعمارية المعتمدة
+==================================================
+
+لا تبنِ ERP كاملًا من الصفر.
+
+استخدم:
+
+ERPNext + Frappe
+كمحرك ERP مركزي وخادم.
+
+وأنشئ Custom Frappe App باسم:
+
+yem_erp_core
+
+يمنع تعديل ERPNext Core إلا عند وجود ضرورة هندسية قصوى
+وموثقة.
+
+العميل يكون:
+
+Flutter
+
+ويستهدف:
+
+Android
+Windows
+
+قاعدة البيانات المحلية:
+
+SQLite + SQLCipher أو حل تشفير مكافئ موثوق.
+
+الاتصال بالخادم يكون:
+
+API ONLY
+
+ولا يسمح لتطبيق Android أو Windows بالاتصال المباشر
+بقاعدة بيانات الخادم.
+
+البنية:
+
+Flutter Android/Windows
+        |
+        v
+Local Database
+        |
+        v
+Local Business Layer
+        |
+        v
+Sync Engine
+        |
+        v
+Custom API
+        |
+        v
+yem_erp_core
+        |
+        v
+ERPNext/Frappe
+
+==================================================
+3. أوضاع التطبيق
+==================================================
+
+يجب دعم ثلاثة Builds مستقلة:
+
+1. OFFLINE STRICT
+
+لا يحتوي AndroidManifest أصلًا على:
+
+android.permission.INTERNET
+
+ولا:
+
+Firebase
+Analytics
+Ads
+Telemetry
+External Crash Reporting
+
+Local DB هو Source of Truth.
+
+--------------------------------------------------
+
+2. LAN ONLY
+
+الاتصال بخادم داخل الشبكة المحلية فقط.
+
+--------------------------------------------------
+
+3. ONLINE
+
+HTTPS
+Authentication
+Encrypted Tokens
+Device Registration
+Sync
+Audit
+Rate Limiting
+Security Controls
+
+==================================================
+4. قواعد هندسية صارمة
+==================================================
+
+ممنوع وضع Business Logic داخل صفحات Flutter.
+
+استخدم طبقات واضحة مثل:
+
+Presentation
+Application
+Domain
+Data
+Infrastructure
+
+كل عملية مالية تمر عبر:
+
+Accounting / Posting Engine
+
+كل عملية مخزون تمر عبر:
+
+Inventory Engine
+
+كل عملية مزامنة تمر عبر:
+
+Sync Engine
+
+كل عملية حساسة تسجل في:
+
+Audit Log
+
+لا تستخدم رقم الفاتورة Primary Key.
+
+استخدم:
+
+UUID
+
+لا تخزن كلمة مرور أو Secret كنص Plain Text.
+
+لا تضع Server Private Keys داخل APK أو EXE.
+
+لا تجعل products.quantity هو مصدر الحقيقة الوحيد للمخزون.
+
+Stock Ledger هو المرجع للحركات.
+
+لا تستخدم Last-Write-Wins في:
+
+Invoices
+Journal Entries
+Stock Transactions
+Custody
+Payments
+Approved Documents
+
+هذه العمليات تستخدم Conflict Queue.
+
+==================================================
+5. مهم جدًا: لا تنفذ المشروع كله دفعة واحدة
+==================================================
+
+نفذ المشروع على مراحل.
+
+لا تنتقل إلى المرحلة التالية قبل نجاح المرحلة الحالية.
+
+PHASE 0
+Foundation + Local Prototype
+
+PHASE 1
+ERPNext/Frappe Server
+
+PHASE 2
+Sync Engine
+
+PHASE 3
+Custody System
+
+PHASE 4
+Accounting
+
+PHASE 5
+Advanced Inventory
+
+PHASE 6
+Exchange Messages
+
+PHASE 7
+Windows
+
+PHASE 8
+Security
+
+PHASE 9
+Production Release
+
+==================================================
+6. PHASE 0
+==================================================
+
+ابدأ فقط بـ:
+
+Flutter project
+
+ثم:
+
+Project architecture
+Local database
+SQLCipher
+Migrations
+Local authentication
+Company
+Branches
+Users
+Roles
+Permissions
+Products
+Categories
+Units
+Customers
+Suppliers
+Warehouses
+Expenses
+Custody basic
+Basic sales invoice
+PDF printing
+
+ثم أنشئ Tests.
+
+لا تبدأ Phase 1 قبل نجاح Phase 0.
+
+==================================================
+7. PHASE 1
+==================================================
+
+تثبيت وإعداد:
+
+Frappe
+ERPNext
+
+ثم إنشاء:
+
+yem_erp_core
+
+داخل التطبيق المخصص أنشئ APIs المطلوبة.
+
+لا تعدل ERPNext Core.
+
+ابدأ Mapping بين YEM ERP وERPNext:
+
+Accounts
+Customers
+Suppliers
+Items
+Warehouses
+Sales
+Purchases
+Payments
+Stock
+
+==================================================
+8. PHASE 2 — Sync Engine
+==================================================
+
+نفذ:
+
+UUID
+Revision
+Outbox
+Inbox
+Delta Sync
+Push
+Pull
+Retry
+Idempotency
+Conflict Resolver
+Sync Checkpoint
+
+كل عملية Offline تنشئ Outbox Event.
+
+استخدم:
+
+Idempotency-Key
+
+لمنع إنشاء مستند مرتين.
+
+==================================================
+9. PHASE 3 — Custody
+==================================================
+
+نفذ نظام العهد المالية كاملًا:
+
+Custody
+Custody Ledger
+Expense
+Transfer
+Settlement
+Approval
+Manager Dashboard
+Remaining Balance
+Receipts
+Attachments
+
+الرصيد يجب أن يحسب من Ledger ولا يحفظ كقيمة يدوية فقط.
+
+==================================================
+10. PHASE 4 — Accounting
+==================================================
+
+أنشئ Posting Engine مركزي.
+
+أي Business Document:
+
+Invoice
+Payment
+Expense
+Custody
+Purchase
+Return
+Transfer
+
+يمر عبر Posting Engine.
+
+يجب دائمًا:
+
+Total Debit = Total Credit
+
+ولا يسمح بترحيل قيد غير متوازن.
+
+==================================================
+11. PHASE 5 — Inventory
+==================================================
+
+نفذ:
+
+Stock Ledger
+Warehouses
+Transfers
+Stock Count
+Adjustments
+Serial Numbers
+Batch
+Barcode
+POS
+Weighted Average
+
+Negative Stock:
+
+OFF افتراضيًا.
+
+==================================================
+12. PHASE 6
+==================================================
+
+Exchange Notification Archive.
+
+يدعم:
+
+SMS
+Android Notification Access
+Share Intent
+WhatsApp Notification فقط
+
+ممنوع:
+
+قراءة WhatsApp Database
+اختراق WhatsApp
+الوصول غير المصرح به.
+
+استخدم:
+
+Sender Filters
+Templates
+Parsers
+SHA-256 duplicate detection
+Confidence
+Matching
+Reconciliation
+
+==================================================
+13. PHASE 7
+==================================================
+
+Windows Flutter Client.
+
+يحتوي:
+
+Admin Dashboard
+Reports
+Bulk operations
+Backup
+Restore
+Import
+Export
+Printing
+User management
+Security Center
+
+==================================================
+14. PHASE 8
+==================================================
+
+Security Hardening:
+
+SQLCipher
+Android Keystore
+Windows DPAPI/Credential Manager
+AES-256-GCM Backup
+Secure Authentication
+RBAC
+Audit
+Session Security
+Device Registration
+Activation
+Signed Builds
+Obfuscation
+Security Tests
+
+==================================================
+15. PHASE 9
+==================================================
+
+Production.
+
+نفذ:
+
+Full build
+Migration tests
+Accounting tests
+Inventory tests
+Sync tests
+Security tests
+Integration tests
+Release signing
+Documentation
+Backup/Restore test
+
+ثم أنشئ:
+
+releases/
+
+YEM_ERP_Offline.apk
+YEM_ERP_LAN.apk
+YEM_ERP_Online.apk
+YEM_ERP_Windows_x64.zip
+Server_Deployment_Package.zip
+
+==================================================
+16. قاعدة مهمة جدًا بسبب حدود استخدام الذكاء الاصطناعي
+==================================================
+
+يجب ألا تعتمد استمرارية المشروع على ذاكرة المحادثة.
+
+المستودع نفسه هو الذاكرة الدائمة للمشروع.
+
+أنشئ وحافظ دائمًا على الملفات التالية:
+
+docs/YEM_ERP_Master_Plan_2026.md
+AGENTS.md
+PROJECT_STATE.md
+TASKS.md
+NEXT_TASK.md
+DECISIONS.md
+ERROR_LOG.md
+CHANGELOG.md
+
+==================================================
+17. PROJECT_STATE.md
+==================================================
+
+بعد كل مهمة ناجحة حدث هذا الملف.
+
+يجب أن يحتوي دائمًا على:
+
+Project Version:
+Current Phase:
+Current Task:
+Completed Tasks:
+Pending Tasks:
+Current Branch:
+Last Commit:
+Build Status:
+Test Status:
+Database Migration Status:
+Known Errors:
+Important Decisions:
+Files Modified:
+Next Task:
+Exact Next Command:
+
+لا تنتظر مني أن أطلب منك تحديثه.
+
+قم بتحديثه تلقائيًا.
+
+==================================================
+18. NEXT_TASK.md
+==================================================
+
+هذا أهم ملف لاستئناف العمل.
+
+بعد كل خطوة اكتب:
+
+CURRENT PHASE
+
+WHAT WAS COMPLETED
+
+WHAT IS WORKING
+
+WHAT IS NOT WORKING
+
+EXACT ERROR IF ANY
+
+FILES MODIFIED
+
+NEXT TASK
+
+NEXT COMMAND
+
+EXPECTED RESULT
+
+DO NOT REDO
+
+==================================================
+19. ERROR_LOG.md
+==================================================
+
+عند ظهور أي خطأ:
+
+سجل:
+
+Date
+Phase
+Command
+Error
+Cause
+Fix
+Result
+
+إذا تم حل الخطأ:
+
+STATUS = RESOLVED
+
+لا تعيد تجربة حل سبق أن فشل بدون سبب جديد.
+
+==================================================
+20. DECISIONS.md
+==================================================
+
+سجل القرارات الهندسية المهمة.
+
+مثال:
+
+ADR-001:
+Flutter for Android/Windows.
+
+ADR-002:
+ERPNext/Frappe server.
+
+ADR-003:
+Custom Frappe app = yem_erp_core.
+
+ADR-004:
+No ERPNext Core modification.
+
+ADR-005:
+SQLite encrypted local storage.
+
+وبذلك لا يعيد Agent مناقشة نفس القرارات في كل جلسة.
+
+==================================================
+21. إدارة حدود ChatGPT/Codex
+==================================================
+
+المشروع مصمم للعمل عبر جلسات متعددة.
+
+بعد كل Subtask ناجحة:
+
+1. احفظ الملفات.
+2. شغل الاختبارات المناسبة.
+3. حدث PROJECT_STATE.md.
+4. حدث NEXT_TASK.md.
+5. حدث TASKS.md.
+6. سجل الأخطاء.
+7. نفذ Git Commit.
+
+لا تترك تغييرات مهمة غير محفوظة.
+
+لا تؤجل كتابة حالة المشروع إلى نهاية مرحلة طويلة.
+
+==================================================
+22. عند بداية جلسة جديدة
+==================================================
+
+لا تبدأ بإعادة تحليل المستودع كاملًا.
+
+نفذ بالترتيب:
+
+1. اقرأ AGENTS.md.
+2. اقرأ PROJECT_STATE.md.
+3. اقرأ NEXT_TASK.md.
+4. اقرأ الجزء المطلوب فقط من Master Plan.
+5. نفذ:
+
+git status
+
+6. اقرأ آخر commits.
+7. أكمل NEXT TASK مباشرة.
+
+لا تعيد تنفيذ Completed Tasks.
+
+لا تعيد إنشاء المشروع.
+
+لا تغير Architecture السابقة بدون ضرورة واضحة.
+
+==================================================
+23. الحفاظ على حصة الذكاء الاصطناعي
+==================================================
+
+لا تقرأ آلاف الملفات بدون حاجة.
+
+لا ترسل ملفات build/generated إلى السياق.
+
+تجاهل عند التحليل ما أمكن:
+
+build/
+.dart_tool/
+node_modules/
+.git/
+dist/
+coverage/
+tmp/
+logs/
+
+واقرأ فقط الملفات المرتبطة بالمهمة الحالية.
+
+لا تستخدم بحثًا عامًا في كامل المستودع عندما يكون مكان الخطأ معروفًا.
+
+لا تعيد شرح ما تم إنجازه في كل رسالة.
+
+ركز على التنفيذ.
+
+==================================================
+24. اختيار المهمة
+==================================================
+
+نفذ مهمة واحدة محددة وقابلة للاختبار في كل دورة.
+
+مثال جيد:
+
+"إنشاء Product repository + migration + tests"
+
+وليس:
+
+"إنشاء نظام المخزون كاملًا."
+
+مثال جيد:
+
+"إنشاء Sales Invoice posting service واختبار قيد البيع الآجل."
+
+وليس:
+
+"إنشاء المحاسبة."
+
+==================================================
+25. BUILD GATE
+==================================================
+
+بعد كل مرحلة:
+
+Build = PASS
+
+Unit Tests = PASS
+
+Database Migration = PASS
+
+ولا تنتقل للمرحلة التالية إذا فشل أي منها.
+
+عند مراحل المحاسبة والمخزون والمزامنة أضف:
+
+Accounting Tests = PASS
+Stock Tests = PASS
+Sync Tests = PASS
+
+==================================================
+26. ممنوع التظاهر بالنجاح
+==================================================
+
+لا تقل:
+
+Done
+Completed
+Working
+
+إلا إذا تم التحقق فعليًا.
+
+إذا لم تتمكن من تشغيل اختبار، اكتب:
+
+NOT VERIFIED
+
+مع السبب.
+
+إذا بقي خطأ:
+
+سجله.
+
+لا تخفه.
+
+==================================================
+27. التعامل مع الأخطاء
+==================================================
+
+عند ظهور Build Error:
+
+لا تستمر بإضافة Features جديدة.
+
+قم أولًا بـ:
+
+Analyze
+Fix
+Build
+Test
+
+كرر حتى:
+
+PASS
+
+ثم أكمل.
+
+==================================================
+28. Git
+==================================================
+
+استخدم commits صغيرة ومنطقية.
+
+أمثلة:
+
+feat(core): initialize YEM ERP architecture
+
+feat(db): add encrypted local database
+
+feat(products): implement products repository
+
+feat(custody): add custody ledger
+
+feat(sync): implement outbox
+
+fix(accounting): correct journal balance validation
+
+test(stock): add duplicate serial tests
+
+==================================================
+29. واجهة المستخدم
+==================================================
+
+RTL عربي كامل.
+
+Arabic = Default.
+
+دعم English لاحقًا.
+
+Light Theme
+Dark Theme
+
+لا تنشئ UI Demo منفصلة عن Backend.
+
+كل زر يجب أن يكون Functional.
+
+كل شاشة يجب أن تتصل بطبقة التطبيق والبيانات الحقيقية.
+
+==================================================
+30. قاعدة بيانات
+==================================================
+
+التزم بالكيانات والجداول المحددة في:
+
+YEM_ERP_Master_Plan_2026.md
+
+ولا تغيّر Schema أساسيًا بلا Migration.
+
+كل Schema Change يجب أن يحتوي Migration + Test.
+
+==================================================
+31. المرجع النهائي
+==================================================
+
+إذا حدث تعارض بين هذه التعليمات وتفصيل وظيفي داخل:
+
+docs/YEM_ERP_Master_Plan_2026.md
+
+فإن Master Plan هو المرجع للمتطلبات الوظيفية.
+
+أما هذه الوثيقة فهي المرجع لطريقة التنفيذ وإدارة المشروع.
+
+==================================================
+32. أول أمر لك الآن
+==================================================
+
+ابدأ فقط بـ PHASE 0.
+
+قبل كتابة الكود:
+
+1. افحص بيئة المشروع الحالية.
+2. لا تحذف أي عمل صالح موجود.
+3. أنشئ هيكل المشروع.
+4. أنشئ AGENTS.md.
+5. أنشئ PROJECT_STATE.md.
+6. أنشئ TASKS.md.
+7. أنشئ NEXT_TASK.md.
+8. أنشئ DECISIONS.md.
+9. أنشئ ERROR_LOG.md.
+10. أنشئ Flutter base architecture.
+11. نفذ Build.
+12. أصلح الأخطاء.
+13. نفذ Tests.
+14. سجل الحالة.
+15. نفذ Commit.
+
+ثم ابدأ أول Subtask من Phase 0.
+
+استمر تلقائيًا ما دام لديك وقت تنفيذ.
+
+لا تنتظر مني تأكيدًا بين الخطوات الطبيعية.
+
+توقف فقط عندما:
+
+- تحتاج معلومة لا يمكن استنتاجها بأمان.
+- تحتاج Secret أو Password.
+- يوجد قرار تجاري لا يمكن اتخاذه تقنيًا.
+- يوجد إجراء خارجي يحتاج موافقة مني.
+- انتهت حصة التنفيذ.
+
+وعند أي توقف:
+
+حدث PROJECT_STATE.md وNEXT_TASK.md أولًا.

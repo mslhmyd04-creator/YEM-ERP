@@ -1,0 +1,40 @@
+name: yem_erp
+description: Arabic-first offline ERP client for Android and Windows.
+publish_to: none
+version: 0.0.1+1
+
+environment:
+  sdk: '>=3.4.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  sqlite3: ^3.6.0
+  flutter_secure_storage: ^11.2.0
+  path_provider: ^2.1.5
+  cryptography: ^2.9.0
+  pdf: ^3.13.1
+  printing: ^5.15.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/fonts/Amiri-Regular.ttf
+    - lib/src/data/migrations/001_core.sql
+    - lib/src/data/migrations/002_local_auth.sql
+    - lib/src/data/migrations/003_master_permissions.sql
+    - lib/src/data/migrations/004_branch_permissions.sql
+    - lib/src/data/migrations/005_administration.sql
+    - lib/src/data/migrations/006_financial_posting.sql
+    - lib/src/data/migrations/007_expense_custody.sql
+    - lib/src/data/migrations/008_basic_sales_stock.sql
+
+hooks:
+  user_defines:
+    sqlite3:
+      source: sqlcipher

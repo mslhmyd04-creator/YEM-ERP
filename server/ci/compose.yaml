@@ -1,0 +1,31 @@
+services:
+  db:
+    image: mariadb:11.8
+    environment:
+      MARIADB_ROOT_PASSWORD: ${YEM_CI_DB_PASSWORD:?required}
+    command: [--character-set-server=utf8mb4, --collation-server=utf8mb4_unicode_ci]
+    healthcheck:
+      test: [CMD, healthcheck.sh, --connect, --innodb_initialized]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+  redis:
+    image: redis:6.2-alpine
+    healthcheck:
+      test: [CMD, redis-cli, ping]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+  integration:
+    build:
+      context: ../..
+      dockerfile: server/ci/Dockerfile
+    environment:
+      YEM_CI_DB_PASSWORD: ${YEM_CI_DB_PASSWORD:?required}
+      YEM_CI_ADMIN_PASSWORD: ${YEM_CI_ADMIN_PASSWORD:?required}
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    # Disposable CI only. No public ports and no host data mounts.

@@ -1,0 +1,108 @@
+name: Phase 0 checks
+
+on:
+  push:
+    branches: [feat/phase-0-foundation]
+    paths-ignore: ['**/*.md', 'docs/**', 'server/**', '.github/workflows/phase1.yml']
+  pull_request:
+    paths-ignore: ['**/*.md', 'docs/**', 'server/**', '.github/workflows/phase1.yml']
+
+jobs:
+  migration:
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name != github.repository
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate migration constraints
+        run: python -m unittest discover -s tools -p 'check_*.py' -v
+
+  flutter:
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name != github.repository
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - name: Generate missing Android and Windows runners
+        run: flutter create --platforms=android,windows --project-name yem_erp .
+      - name: Package platform runners
+        run: zip -qr platform-runners.zip android windows -x '*/.gradle/*' '*/flutter/ephemeral/*'
+      - uses: actions/upload-artifact@v4
+        with:
+          name: platform-runners
+          path: platform-runners.zip
+          retention-days: 7
+      - name: Resolve dependencies
+        run: flutter pub get
+      - name: Analyze sources
+        run: flutter analyze
+      - name: Run Flutter unit tests
+        timeout-minutes: 3
+        shell: bash
+        run: flutter test --reporter expanded --timeout 2m 2>&1 | tee flutter-test.log
+      - name: Preserve Flutter test diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: flutter-test-log-linux
+          path: flutter-test.log
+          retention-days: 7
+      - name: Preserve Arabic PDF visual QA fixture
+        uses: actions/upload-artifact@v4
+        with:
+          name: invoice-arabic-qa
+          path: build/test-output/invoice-arabic-qa.pdf
+          if-no-files-found: error
+          retention-days: 14
+      - name: Build Android debug app
+        run: flutter build apk --debug
+      - name: Upload Android development package
+        uses: actions/upload-artifact@v4
+        with:
+          name: yem-erp-android-debug
+          path: build/app/outputs/flutter-apk/app-debug.apk
+          if-no-files-found: error
+          retention-days: 14
+
+  windows:
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name != github.repository
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - name: Enable desktop target
+        run: flutter config --enable-windows-desktop
+      - name: Resolve dependencies
+        run: flutter pub get
+      - name: Test encrypted storage on Windows runner
+        timeout-minutes: 3
+        shell: bash
+        run: flutter test --reporter expanded --timeout 2m 2>&1 | tee flutter-test.log
+      - name: Preserve Windows test diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: flutter-test-log-windows
+          path: flutter-test.log
+          retention-days: 7
+      - name: Build Windows debug app
+        run: flutter build windows --debug
+      - name: Upload Windows development package
+        uses: actions/upload-artifact@v4
+        with:
+          name: yem-erp-windows-debug
+          path: build/windows/x64/runner/Debug/
+          if-no-files-found: error
+          retention-days: 14

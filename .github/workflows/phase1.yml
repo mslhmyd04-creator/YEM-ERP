@@ -1,0 +1,48 @@
+name: Phase 1 server integration
+on:
+  push:
+    branches: [feat/phase-0-foundation]
+    paths: ['server/**', '.github/workflows/phase1.yml']
+  pull_request:
+    paths: ['server/**', '.github/workflows/phase1.yml']
+permissions:
+  contents: read
+concurrency:
+  group: phase1-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  server:
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name != github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check identity contract
+        run: python -m unittest discover -s server/tests -v
+      - name: Generate disposable credentials
+        shell: bash
+        run: |
+          db_password=$(openssl rand -hex 24)
+          admin_password=$(openssl rand -hex 24)
+          echo "::add-mask::$db_password"
+          echo "::add-mask::$admin_password"
+          echo "YEM_CI_DB_PASSWORD=$db_password" >> "$GITHUB_ENV"
+          echo "YEM_CI_ADMIN_PASSWORD=$admin_password" >> "$GITHUB_ENV"
+      - name: Build isolated server and test installed app
+        shell: bash
+        run: |
+          set -o pipefail
+          docker compose -p yem-ci -f server/ci/compose.yaml up --build --abort-on-container-exit --exit-code-from integration 2>&1 | tee server-integration.log
+      - name: Preserve diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase1-server-diagnostics
+          path: server-integration.log
+          retention-days: 14
+      - name: Remove disposable environment
+        if: always()
+        run: docker compose -p yem-ci -f server/ci/compose.yaml down --volumes --remove-orphans

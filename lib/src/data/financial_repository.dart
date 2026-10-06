@@ -1,0 +1,17 @@
+import 'package:sqlite3/sqlite3.dart';
+import '../domain/financial_document.dart';
+
+class FinancialRepository {
+  FinancialRepository(this.db);
+  final Database db;
+  List<FinancialChoice> branches(String company) => db.select('SELECT id,name FROM branches WHERE company_id=? ORDER BY name',[company]).map((r)=>FinancialChoice(r['id'] as String,r['name'] as String)).toList();
+  List<FinancialChoice> employees(String company) => db.select('SELECT id,username FROM users WHERE company_id=? AND is_active=1 ORDER BY username',[company]).map((r)=>FinancialChoice(r['id'] as String,r['username'] as String)).toList();
+  List<ExpenseCategory> categories(String company) => db.select('SELECT id,name,account_id FROM expense_categories WHERE company_id=? ORDER BY name',[company]).map((r)=>ExpenseCategory(r['id'] as String,r['name'] as String,r['account_id'] as String)).toList();
+  List<CustodyRecord> custodies(String company) => db.select('SELECT id,document_number,employee_id,account_id,description,issued_minor FROM custodies WHERE company_id=? ORDER BY document_number',[company]).map((r)=>CustodyRecord(r['id'] as String,r['document_number'] as String,r['employee_id'] as String,r['account_id'] as String,r['description'] as String,r['issued_minor'] as int)).toList();
+  List<ExpenseRecord> expenses(String company) => db.select('SELECT id,document_number,description,amount_minor,custody_id FROM expenses WHERE company_id=? ORDER BY document_number',[company]).map((r)=>ExpenseRecord(r['id'] as String,r['document_number'] as String,r['description'] as String,r['amount_minor'] as int,r['custody_id'] as String?)).toList();
+  bool hasCategory(String company,String code) => db.select('SELECT 1 FROM expense_categories WHERE company_id=? AND code=?',[company,code]).isNotEmpty;
+  void addCategory(String company,String id,String code,String name,String account) => db.execute('INSERT INTO expense_categories(id,company_id,code,name,account_id) VALUES(?,?,?,?,?)',[id,company,code,name,account]);
+  void addCustody({required String id,required String company,required String branch,required String number,required String employee,required String account,required int amount,required String date,required String description,required String entry,required String user}) => db.execute('INSERT INTO custodies(id,company_id,branch_id,document_number,employee_id,account_id,issued_minor,document_date,description,journal_entry_id,created_by) VALUES(?,?,?,?,?,?,?,?,?,?,?)',[id,company,branch,number,employee,account,amount,date,description,entry,user]);
+  void addExpense({required String id,required String company,required String branch,required String number,required String category,required int amount,required String date,required String description,String? cash,String? custody,required String entry,required String user}) => db.execute('INSERT INTO expenses(id,company_id,branch_id,document_number,category_id,amount_minor,document_date,description,cash_account_id,custody_id,journal_entry_id,created_by) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)',[id,company,branch,number,category,amount,date,description,cash,custody,entry,user]);
+  void movement(String id,String company,String custody,String entry,String type,int amount,int before,int after) => db.execute('INSERT INTO custody_ledger(id,company_id,custody_id,journal_entry_id,movement_type,amount_minor,balance_before_minor,balance_after_minor) VALUES(?,?,?,?,?,?,?,?)',[id,company,custody,entry,type,amount,before,after]);
+}
