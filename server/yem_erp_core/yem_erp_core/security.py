@@ -18,16 +18,16 @@ def require_company(company, *, manage=False):
     return document
 
 
-def mapping_has_permission(doc, user=None, permission_type=None):
+def mapping_has_permission(doc, user=None, ptype=None, debug=False):
     user = user or frappe.session.user
     if user == "Administrator":
-        return None
+        return True
     if user == "Guest" or not frappe.db.exists(
         "User Permission", {"user": user, "allow": "Company", "for_value": doc.company}
     ):
         return False
-    # None preserves Frappe's ordinary role/document permission checks.
-    return None
+    # Frappe v16 combines this veto with ordinary role/document permissions.
+    return True
 
 
 def mapping_query_conditions(user=None):
