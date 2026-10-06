@@ -20,12 +20,12 @@ On Windows with the Flutter desktop toolchain also run `flutter build windows --
 
 [Run 37352094707](https://github.com/mslhmyd04-creator/YEM-ERP/actions/runs/37352094707), code `5d8c545edab01de34072550d0eee1e1ec630f90e`: analysis, 68 Flutter tests on each runner, 17 SQL checks, both builds and uploads PASS. See [gate](docs/PHASE0_GATE.md).
 
-- [Android debug](https://github.com/mslhmyd04-creator/YEM-ERP/actions/runs/37352094707/artifacts/11362299404)
-- [Windows debug bundle](https://github.com/mslhmyd04-creator/YEM-ERP/actions/runs/37352094707/artifacts/11363252267)
+- [Android debug](https://github.com/mslhmyd04-creator/YEM-ERP/actions/runs/37538221425/artifacts/11448270020)
+- [Windows debug bundle](https://github.com/mslhmyd04-creator/YEM-ERP/actions/runs/37538221425/artifacts/11447321856)
 - [Synthetic Arabic PDF fixture](https://github.com/mslhmyd04-creator/YEM-ERP/actions/runs/37352094707/artifacts/11362513485)
 
-Artifacts expire October 19, 2026. Follow [device acceptance](docs/PHASE0_DEVICE_TESTS.md) with isolated test data. User-device installation, native credential storage and physical printing remain NOT VERIFIED.
+Android/Windows artifacts were rebuilt in run 37538221425 and expire October 20, 2026. Follow [device acceptance](docs/PHASE0_DEVICE_TESTS.md) with isolated test data. User-device installation, native credential storage and physical printing remain NOT VERIFIED.
 
 Current limits: YER/two decimals, whole quantities, positive opening cost, immediate posting and no tax separation. Full approvals/settlement, serial/batch/returns, synchronization, backups, signed releases and separate strict offline/LAN/online variants remain pending. This development package is not a production or certified strict-offline release. See [financial scope](docs/PHASE0_FINANCIAL_SCOPE.md), [sales scope](docs/PHASE0_SALES_SCOPE.md) and [PDF QA](docs/PHASE0_PDF_QA.md).
 
-Phase 1 requires an identified ERPNext/Frappe target and authorized execution route: [required inputs](docs/PHASE1_REQUIRED_INPUTS.md).
+Phase 1 has a verified isolated ERPNext server/mapping foundation: [gate](docs/PHASE1_GATE.md), [server instructions](server/README.md). Run 37538670785 passes 20 server tests. Business-document APIs, sync and permanent deployment remain pending; [persistent target inputs](docs/PHASE1_REQUIRED_INPUTS.md).

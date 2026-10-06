@@ -44,3 +44,5 @@
 - First Phase 1 run 37537059839: ERPNext/custom app install and migrate PASS; fixture setup failed on missing Warehouse Type Transit before test execution. Fix uses ERPNext's own install_fixtures.install(country='Yemen') before companies; revalidation PENDING. Also add native REST permission hooks and HTTP/concurrency tests.
 
 - Run 37537667400: install/migrate and nine installed DB tests PASS. HTTP race test correctly denied the fixture manager's missing Item read permission. Add Stock User to that fixture only; do not weaken target permission checks. Four other HTTP tests PASS. Revalidate with mapped-identity rename protection.
+
+- 2026-10-06: RESOLVED. Final 37538670785 passes all 20 server tests including 11 DB/5 HTTP tests; fixture initialization, target Item permission and v16 hook contract fixed. Company/item identity guards verified. No outstanding failure in this increment.

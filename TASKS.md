@@ -44,6 +44,7 @@ Phase 0 software gate PASS. Phase 1 target intake is blocked on the server/site 
 ## Phase 1 current increment
 - [x] Implement disposable CI target, custom Frappe app and mapping/security contract.
 - [x] Run four pure identity tests locally.
-- [ ] Verify ERPNext/app installation, migration and database integration tests in CI.
-- [ ] Verify authenticated HTTP boundary/concurrent retry behavior and complete Phase 1 contract.
+- [x] Verify ERPNext/app installation, migration and DB/HTTP integration tests (37538670785; 20 tests).
+- [x] Verify authenticated HTTP/native REST boundary and concurrent retry behavior (37538670785).
+- [ ] Complete Phase 1 business-document API contract; mapping existing records is not document posting.
 - [ ] Identify and verify persistent deployment target before production release.

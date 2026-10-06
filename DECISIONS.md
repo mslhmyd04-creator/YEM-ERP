@@ -26,3 +26,5 @@
 - Phase 0 software gate is PASS, distinct from unverified physical-device/printer acceptance. Start Phase 1 target intake, but do not assume an ERPNext/Frappe site or deploy against an unknown existing environment. Current GitHub access supplies repository operations, not server execution. Follow docs/PHASE1_REQUIRED_INPUTS.md.
 
 - 2026-10-06: Continue Phase 1 in a disposable GitHub Actions Docker site instead of blocking all development on production host intake. ERPNext v16.50.0 is an explicit new-test-site target, not an upgrade to a user site. Require explicit Company grants in custom APIs; shared ERP masters retain target permissions. CI is not persistent deployment.
+
+- Frappe v16 permission hooks return an affirmative veto-pass only alongside standard role/document checks; explicit tenant grants also restrict native REST lists/documents. Bound document/company identities cannot be renamed/merged until an audited rebind policy exists. Shared ERP masters are not falsely presented as tenant-private. Sequential retries succeed; racing uniqueness/deadlock conflicts may be retried.

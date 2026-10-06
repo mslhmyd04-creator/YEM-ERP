@@ -1,17 +1,18 @@
 # Project state
 
 - Project Version: 0.0.1 development prototype
-- Current Phase: 1 — isolated CI server implementation; Phase 0 software gate PASS
-- Current Task: Verify the disposable ERPNext v16.50.0 CI site and yem_erp_core mapping API
-- Completed Tasks: encrypted Android/Windows storage; migrations 001–008; setup/login/RBAC; products/master/branch forms; protected user/role administration; exact balanced immutable posting; basic cash/custody expenses; stock opening and atomic cash/credit/service invoices; offline Arabic PDF and session-aware print boundary.
-- Latest Verified Code: 5d8c545edab01de34072550d0eee1e1ec630f90e; run 37352094707. Connector/local commit IDs differ.
-- Build Status: Android and Windows debug builds and uploads PASS.
-- Test Status: analysis PASS; 68 Flutter tests PASS on each Ubuntu/Windows runner; 17 SQL checks PASS locally/CI.
-- PDF Status: seven A4 pages, embedded Amiri/Unicode mapping, all 50 lines, maximum amount, long SKU, repeated headers and inseparable summary structurally/visually PASS. Details: docs/PHASE0_PDF_QA.md.
-- Database Migration Status: schema 8; encryption/reopen, history/upgrade/rollback, tenant references and stable account UUIDs tested. Physical-device migration NOT VERIFIED.
-- Known Errors: current native/SQL checks pass; earlier PDF import/const/assertion/page-break issues resolved. Local Flutter/Dart SDK unavailable. A late local shell became unresponsive; final documentation checkpoint is written directly to GitHub. Retrieve the latest branch documentation before resuming if the workspace copy differs.
-- Artifacts: Android 11362299404; Windows 11363252267; PDF fixture 11362513485; expire 2026-10-19.
-- Test target: disposable GitHub Actions Docker site, ERPNext v16.50.0. Production target still unspecified. Real server integration PENDING CI; four pure identity tests PASS locally.
-- Pending Tasks: user-device acceptance; Phase 1 deployment/custom app/mapping/APIs/integration; Phases 2–9 pending.
-- Next Task: inspect Phase 1 server integration workflow; fix installation/test failures before further features. Then HTTP auth/concurrent mapping tests and remaining Phase 1 API/target gate. Do not start Phase 2 yet.
-- Device Status: installation, native secure credentials, restart/upgrade and physical print/save NOT VERIFIED. Follow docs/PHASE0_DEVICE_TESTS.md.
+- Current Phase: 1 — mapping/API foundation verified; complete business integration and persistent deployment pending
+- Current Task: complete the Phase 1 business-document API contract before synchronization
+- Phase 0: local encrypted auth/RBAC/master data, balanced posting, basic expenses/custody, stock-backed sales and Arabic PDF remain verified.
+- Client Validation: run 37538221425; analysis, 68 Flutter tests per Ubuntu/Windows runner, 17 SQL checks, Android/Windows debug builds and uploads PASS. No client feature change in this server increment.
+- Server Code: e841190241c2cfcc939551a575dee9a58b3b3e99; run 37538670785 PASS.
+- Server Validation: official ERPNext v16.50.0 with MariaDB 11.8/Redis 6.2; app installation/migration PASS; 4 pure identity + 11 installed database + 5 actual HTTP tests PASS.
+- Implemented Server: yem_erp_core; nine supported mapping types; immutable scoped UUID bindings; explicit Company grants; target read permissions; native REST query/doc permission hooks; transactional Comment audit; duplicate/conflict controls; bound item/company rename protection.
+- Server Scope: binding EXISTING documents, not creating/posting financial or stock documents. capabilities.sync_ready=false. Full Phase 1 NOT complete.
+- Database Migration Status: local schema 8 verified; installed server mapping DocType migration verified in disposable CI. Physical-device migration NOT VERIFIED.
+- Artifacts: Android 11448270020; Windows 11447321856; run 37538221425; expires 2026-10-20.
+- Known Errors: Transit fixture setup and insufficient Item permission in test user resolved. Latest native and server checks PASS. Local Docker/Flutter unavailable; corresponding checks run in GitHub Actions.
+- Persistent Target: not supplied; CI site is disposable, unpublished and removed after testing. No claim of production hosting.
+- Pending Tasks: Phase 1 business-document APIs/integration and persistent deployment; Phases 2–9; user-device acceptance/release signing.
+- Next Task: see NEXT_TASK.md and docs/PHASE1_GATE.md. Do not redo verified mapping foundations or call current debug APK/Windows builds final.
+- Device Status: installation, secure credential backend, restart/upgrade and physical printing NOT VERIFIED.

@@ -48,3 +48,5 @@
 - 2026-10-05: Phase 0 software gate PASS in 37352094707 / 5d8c545edab01de34072550d0eee1e1ec630f90e: analysis, 68 Flutter tests on each runner, 17 SQL checks, Android/Windows debug builds and uploads. Seven-page Arabic PDF inspected with Poppler; 50 lines, large exact amounts, long SKU, repeated headers and inseparable summary PASS. Physical-device acceptance and Phases 1–9 remain pending; server target required for Phase 1.
 
 - 2026-10-06: Add isolated Phase 1 server workflow and yem_erp_core identity/mapping API. Four pure identity tests, Python compile and bash syntax PASS locally; installed ERPNext tests PENDING CI. No client release changes.
+
+- 2026-10-06: Server identity increment PASS (e841190241c2cfcc939551a575dee9a58b3b3e99, 37538670785): install/migrate and 20 tests. Native regression/rebuild PASS in 37538221425; current debug artifacts renewed to October 20. Whole Phase 1 and production release remain pending.
