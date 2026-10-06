@@ -26,7 +26,8 @@ def request(method, path, payload=None, *, authenticated=True):
         with urllib.request.urlopen(req, timeout=20) as response:
             return response.status, json.load(response)
     except urllib.error.HTTPError as error:
-        return error.code, json.loads(error.read())
+        with error:
+            return error.code, json.loads(error.read())
 
 
 class HttpTests(unittest.TestCase):

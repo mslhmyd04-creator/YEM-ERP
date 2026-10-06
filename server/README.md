@@ -29,6 +29,9 @@ uniqueness rejects racing duplicates; clients must retry after a conflict.
 Bindings cannot be reassigned or deleted through this API. Accounting documents
 are not created or posted by these endpoints.
 
-Pending Phase 1 work: authenticated HTTP integration tests, concurrent retry
-tests, document posting/mapping policy and an approved persistent deployment
-target. Phase 2 sync must wait for the complete Phase 1 gate.
+HTTP auth, native resource permissions and concurrent retry checks are now
+implemented; their CI result must be verified. Remaining Phase 1 work includes
+the complete document integration contract and a persistent deployment target. Phase 2 sync must wait for the complete Phase 1 gate.
+
+Mapped target identities cannot be renamed/merged until an audited mapping
+update policy is implemented; display labels can still be edited normally.

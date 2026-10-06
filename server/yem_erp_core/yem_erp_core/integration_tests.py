@@ -93,6 +93,12 @@ class InstalledAppTests(unittest.TestCase):
             "reference_doctype": "YEM Entity Mapping", "reference_name": result['mapping_id']
         }))
 
+    def test_renaming_bound_identity_is_rejected(self):
+        bind_entity(self.companies[0], "item", self.uid, self.item)
+        with self.assertRaises(frappe.ValidationError):
+            frappe.rename_doc("Item", self.item, "YEM-CI-RENAMED")
+        self.assertEqual(resolve_entity(self.companies[0], "item", self.uid)['target_name'], self.item)
+
     def test_manager_requires_explicit_company_grant(self):
         user = frappe.get_doc({"doctype": "User", "email": "ci-manager@example.invalid",
                                "first_name": "CI", "send_welcome_email": 0,

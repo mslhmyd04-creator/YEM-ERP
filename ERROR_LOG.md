@@ -42,3 +42,5 @@
 - 2026-10-06: Development host blocker narrowed: a disposable Actions server can validate the app without a permanent user host. Four pure tests PASS. ERPNext container execution unavailable locally (Docker absent); installed checks PENDING CI, not claimed verified.
 
 - First Phase 1 run 37537059839: ERPNext/custom app install and migrate PASS; fixture setup failed on missing Warehouse Type Transit before test execution. Fix uses ERPNext's own install_fixtures.install(country='Yemen') before companies; revalidation PENDING. Also add native REST permission hooks and HTTP/concurrency tests.
+
+- Run 37537667400: install/migrate and nine installed DB tests PASS. HTTP race test correctly denied the fixture manager's missing Item read permission. Add Stock User to that fixture only; do not weaken target permission checks. Four other HTTP tests PASS. Revalidate with mapped-identity rename protection.

@@ -14,7 +14,7 @@ def setup():
     user = frappe.get_doc({"doctype": "User", "email": "ci-http@example.invalid",
                            "first_name": "HTTP", "send_welcome_email": 0,
                            "api_key": api_key, "api_secret": api_secret,
-                           "roles": [{"role": "System Manager"}]}).insert()
+                           "roles": [{"role": "System Manager"}, {"role": "Stock User"}]}).insert()
     frappe.get_doc({"doctype": "User Permission", "user": user.name,
                     "allow": "Company", "for_value": "YEM CI A",
                     "apply_to_all_doctypes": 1}).insert()

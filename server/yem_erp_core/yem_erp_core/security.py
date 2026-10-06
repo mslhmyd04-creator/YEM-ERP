@@ -40,3 +40,15 @@ def mapping_query_conditions(user=None):
         return "1=0"
     names = ",".join(frappe.db.escape(company) for company in companies)
     return f"`tabYEM Entity Mapping`.`company` IN ({names})"
+
+
+def protect_bound_identity(doc, method=None, old=None, new=None, merge=False):
+    from yem_erp_core.identity import ENTITY_TYPES
+    if doc.doctype == "YEM Entity Mapping":
+        frappe.throw("Mapping identity cannot be renamed")
+    if doc.doctype not in ENTITY_TYPES.values():
+        return
+    if frappe.db.table_exists("YEM Entity Mapping") and frappe.db.exists(
+        "YEM Entity Mapping", {"target_doctype": doc.doctype, "target_name": doc.name}
+    ):
+        frappe.throw("Mapped document identity cannot be renamed or merged")

@@ -11,3 +11,4 @@ permission_query_conditions = {
 has_permission = {
     "YEM Entity Mapping": "yem_erp_core.security.mapping_has_permission"
 }
+doc_events = {"*": {"before_rename": "yem_erp_core.security.protect_bound_identity"}}
