@@ -38,3 +38,5 @@
 - PDF CI: four analyzer diagnostics (unnecessary typed_data import and constant TextStyle constructors) fixed. Pagination assertion initially assumed spaces in PDF dictionaries; compact `/Type/Page` serialization needs optional whitespace. Corrected the format assumption; actual page count will also be checked with Poppler on the emitted artifact.
 
 - 2026-10-05: All PDF diagnostics/assertion/layout issues RESOLVED in 37352094707. Container alone still allowed a summary page break; explicit Inseparable keeps total/description/note together. Final generated artifact rendered/inspected across all seven pages; 68 native tests per runner, 17 SQL checks, analysis and both builds PASS. No supplied server target/execution route: Phase 1 deployment NOT VERIFIED.
+
+- 2026-10-06: Development host blocker narrowed: a disposable Actions server can validate the app without a permanent user host. Four pure tests PASS. ERPNext container execution unavailable locally (Docker absent); installed checks PENDING CI, not claimed verified.

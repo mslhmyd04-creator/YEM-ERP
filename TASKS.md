@@ -40,3 +40,10 @@ Phase 0 software gate PASS. Phase 1 target intake is blocked on the server/site 
 
 - [x] Verify basic immutable stock opening and atomic cash/credit/service sales invoices (37349903517).
 - [x] Verify bundled Arabic PDF rendering, pagination and native print builds (37352094707); user-device printing NOT VERIFIED.
+
+## Phase 1 current increment
+- [x] Implement disposable CI target, custom Frappe app and mapping/security contract.
+- [x] Run four pure identity tests locally.
+- [ ] Verify ERPNext/app installation, migration and database integration tests in CI.
+- [ ] Verify authenticated HTTP boundary/concurrent retry behavior and complete Phase 1 contract.
+- [ ] Identify and verify persistent deployment target before production release.

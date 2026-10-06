@@ -1,0 +1,70 @@
+{
+  "doctype": "DocType",
+  "name": "YEM Entity Mapping",
+  "module": "Yem Erp Core",
+  "engine": "InnoDB",
+  "autoname": "",
+  "track_changes": 1,
+  "field_order": [
+    "company",
+    "entity_type",
+    "local_uuid",
+    "target_doctype",
+    "target_name",
+    "reverse_key"
+  ],
+  "fields": [
+    {
+      "fieldname": "company",
+      "label": "Company",
+      "fieldtype": "Link",
+      "reqd": 1,
+      "options": "Company"
+    },
+    {
+      "fieldname": "entity_type",
+      "label": "Entity Type",
+      "fieldtype": "Select",
+      "reqd": 1,
+      "options": "account\ncustomer\nsupplier\nitem\nwarehouse\nsale\npurchase\npayment\nstock"
+    },
+    {
+      "fieldname": "local_uuid",
+      "label": "Local Uuid",
+      "fieldtype": "Data",
+      "reqd": 1
+    },
+    {
+      "fieldname": "target_doctype",
+      "label": "Target Doctype",
+      "fieldtype": "Link",
+      "reqd": 1,
+      "options": "DocType"
+    },
+    {
+      "fieldname": "target_name",
+      "label": "Target Name",
+      "fieldtype": "Dynamic Link",
+      "reqd": 1,
+      "options": "target_doctype"
+    },
+    {
+      "fieldname": "reverse_key",
+      "label": "Reverse Key",
+      "fieldtype": "Data",
+      "reqd": 1,
+      "unique": 1,
+      "read_only": 1
+    }
+  ],
+  "permissions": [
+    {
+      "role": "System Manager",
+      "read": 1,
+      "create": 1,
+      "write": 0,
+      "delete": 0,
+      "report": 1
+    }
+  ]
+}

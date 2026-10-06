@@ -1,11 +1,9 @@
 # Resume here
 
-- CURRENT PHASE: 1 target intake BLOCKED; Phase 0 software gate PASS.
-- VERIFIED: run 37352094707 / code 5d8c545edab01de34072550d0eee1e1ec630f90e passes analysis, 68 Flutter tests on each runner, 17 SQL checks, both native debug builds and uploads. Schema 8.
-- COMPLETED: encrypted/auth/master/admin foundation, exact-money posting, basic expenses/custody, stock opening, cash/credit/service invoices, Arabic PDF with frozen snapshots and async session checks.
-- PDF: latest artifact 11362513485 rendered/inspected across all seven A4 pages, including 50 rows, maximum exact amount and long SKU. Explicit Inseparable keeps the total/description/note together. No current test/build/layout errors.
-- NEXT REQUIRED INPUT: ERPNext/Frappe existing site URL/version or new test host, OS, authorized execution/access route, LAN/online endpoint. See docs/PHASE1_REQUIRED_INPUTS.md. Do not request or commit plaintext secrets.
-- NEXT ACTION AFTER INPUT: inspect and isolate target, install/verify compatible Frappe/ERPNext, create yem_erp_core, explicit UUID mappings and authenticated company-scoped APIs, then integration/permission/duplicate/rollback checks. Do not start Phase 2 until Phase 1 passes.
-- DO NOT REDO: verified Phase 0 code. Retrieve latest branch documentation if local files differ; final docs checkpoint was saved through GitHub after the local shell became unresponsive.
-- DEVICE ACCEPTANCE: NOT VERIFIED; docs/PHASE0_DEVICE_TESTS.md. Debug Android/Windows artifacts 11362299404/11363252267 expire 2026-10-19.
-- LIMITS: YER/two decimals; whole quantities; immediate posting; no tax separation, full approvals/settlement/returns/serial/batch/sync/production variants.
+- CURRENT PHASE: 1 isolated server CI; Phase 0 software gate PASS.
+- VERIFIED CLIENT: 37352094707; 68 Flutter tests per runner, 17 SQL checks, Android/Windows debug builds. No client code changed in this increment.
+- NEW: server/yem_erp_core with company-scoped immutable UUID bindings for nine ERP document types, explicit Company User Permission, target read permission, transactional Comment audit and duplicate constraints.
+- TEST TARGET: ephemeral GitHub Actions Docker site yem-ci.localhost; official ERPNext v16.50.0, MariaDB 11.8, Redis 6.2. No external ports, production data or permanent server assumed.
+- LOCAL: four pure identity tests, Python compilation and shell syntax PASS. Native installed tests PENDING in Phase 1 workflow.
+- NEXT: inspect workflow for the latest branch commit, fix failures, verify installed tests. Then implement HTTP auth/concurrent duplicate checks and remaining Phase 1 integration contract. Phase 2 remains gated.
+- PRODUCTION: persistent host/LAN/online endpoint still unspecified; no deployed production server or signed final client releases. Physical-device tests NOT VERIFIED.
