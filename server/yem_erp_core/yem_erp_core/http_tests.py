@@ -62,6 +62,12 @@ class HttpTests(unittest.TestCase):
         successes = [body['message'] for status, body in results if status == 200]
         self.assertTrue(successes, results)
         self.assertTrue(all(status in (200, 409, 417, 500) for status, _ in results), results)
+        for status, body in results:
+            if status != 200:
+                self.assertIn(body.get('exc_type'), {
+                    'DuplicateEntryError', 'UniqueValidationError',
+                    'QueryDeadlockError', 'QueryTimeoutError',
+                }, body)
         retry_status, retry = request('POST', self.base + 'bind_entity', payload)
         self.assertEqual(retry_status, 200, retry)
         self.assertTrue(all(item == retry['message'] for item in successes))

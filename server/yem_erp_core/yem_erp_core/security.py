@@ -46,6 +46,9 @@ def protect_bound_identity(doc, method=None, old=None, new=None, merge=False):
     from yem_erp_core.identity import ENTITY_TYPES
     if doc.doctype == "YEM Entity Mapping":
         frappe.throw("Mapping identity cannot be renamed")
+    if doc.doctype == "Company" and frappe.db.table_exists("YEM Entity Mapping"):
+        if frappe.db.exists("YEM Entity Mapping", {"company": doc.name}):
+            frappe.throw("Mapped company identity cannot be renamed or merged")
     if doc.doctype not in ENTITY_TYPES.values():
         return
     if frappe.db.table_exists("YEM Entity Mapping") and frappe.db.exists(

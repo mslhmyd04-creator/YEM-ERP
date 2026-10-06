@@ -99,6 +99,12 @@ class InstalledAppTests(unittest.TestCase):
             frappe.rename_doc("Item", self.item, "YEM-CI-RENAMED")
         self.assertEqual(resolve_entity(self.companies[0], "item", self.uid)['target_name'], self.item)
 
+    def test_renaming_mapped_company_is_rejected(self):
+        bind_entity(self.companies[0], "item", self.uid, self.item)
+        with self.assertRaises(frappe.ValidationError):
+            frappe.rename_doc("Company", self.companies[0], "YEM CI Renamed")
+        self.assertEqual(resolve_entity(self.companies[0], "item", self.uid)['target_name'], self.item)
+
     def test_manager_requires_explicit_company_grant(self):
         user = frappe.get_doc({"doctype": "User", "email": "ci-manager@example.invalid",
                                "first_name": "CI", "send_welcome_email": 0,
